@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="10.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.nailsandscrews.LoginController">
+    <children>
+        <Label text="Username:" />
+        <TextField fx:id="usernameField" promptText="Enter your username" maxWidth="200.0" />
+        <Label text="Password:" />
+        <PasswordField fx:id="passwordField" promptText="Enter your password" maxWidth="200.0" />
+        <Button fx:id="loginButton" text="Login" prefWidth="100.0" />
+        <ImageView fitHeight="243.0" fitWidth="243.0">
+            <image>
+                <Image url="@../images/Designer.png" />
+            </image>
+        </ImageView>
+    </children>
+</VBox>

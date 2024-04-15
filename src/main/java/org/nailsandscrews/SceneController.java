@@ -1,4 +1,2 @@
-package org.nailsandscrews;
-
-public class SceneController {
+package org.nailsandscrews;public class SceneController {
 }
