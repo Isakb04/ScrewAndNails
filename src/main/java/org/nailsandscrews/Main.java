@@ -1,23 +1,31 @@
 package org.nailsandscrews;
 
 import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 
 public class Main extends Application {
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        Login screen = new Login();
-        screen.load(stage);
-    }
+ @Override
+ public void start(Stage stage) {
+  try {
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+   Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+   Scene scene = new Scene(root);
+   stage.setTitle("System Login");
+   stage.setResizable(false);
+   stage.setScene(scene);
+   stage.centerOnScreen();
+   stage.show();
+
+  } catch(Exception e) {
+   e.printStackTrace();
+  }
+ }
+
+ public static void main(String[] args) {
+  launch(args);
+ }
 }

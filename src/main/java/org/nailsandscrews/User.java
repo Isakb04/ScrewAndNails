@@ -7,12 +7,12 @@ public class User {
     private int ID;
     private String username;
     private String password;
+    private String type;
 
     @Id
     public int getID() {
         return ID;
     }
-
     public void setID(int ID) {
         this.ID = ID;
     }
@@ -31,5 +31,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

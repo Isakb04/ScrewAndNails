@@ -5,7 +5,15 @@
 <hibernate-mapping>
     <class name = "org.nailsandscrews.Stock" table = "stock">
         <id name = "id" column = "id" type = "int" />
+        <property name = "type" column = "type" type = "string"/>
         <property name = "product_type" column = "product_type" type = "string"/>
         <property name = "material" column = "material" type = "string"/>
+        <property name = "length" column = "length" type = "string"/>
+        <property name = "buying_price" column = "buying_price" type = "float"/>
+        <property name = "selling_price" column = "selling_price" type = "float"/>
+        <property name = "quantity" column = "quantity" type = "int"/>
+        <property name="supplier" column="supplier" type="string"/>
+        <property name="date_added" column="date_added" type="string"/>
+        <property name="last_updated" column="last_updated" type="string"/>
     </class>
 </hibernate-mapping>

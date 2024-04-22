@@ -38,4 +38,17 @@ public class DatabaseConnection {
         closeDBSession();
         return !resultList.isEmpty();
     }
+
+    public static List<Stock> getAllStocks() {
+    openDBSession();
+    databaseSession.beginTransaction();
+
+    List<Stock> resultList = databaseSession.createQuery("from Stock").getResultList();
+
+    databaseSession.getTransaction().commit();
+    closeDBSession();
+    return resultList;
+    }
+
+
 }

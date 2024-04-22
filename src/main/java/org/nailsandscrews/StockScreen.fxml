@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+
+<VBox alignment="CENTER" prefHeight="706.0" prefWidth="1280.0" spacing="10.0" stylesheets="@../resources/design/StockScreenStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.nailsandscrews.StockController">
+
+    <Rectangle arcHeight="25" arcWidth="25" fill="#3c4036" height="97" width="1280" />
+   <HBox prefHeight="100.0" prefWidth="200.0" translateX="33.0" translateY="-36.0">
+      <children>
+         <ComboBox prefWidth="150.0" promptText="Choice 2" />
+         <ComboBox prefWidth="150.0" promptText="Choice 4" />
+         <ComboBox prefWidth="150.0" promptText="Choice 3" />
+         <ComboBox prefWidth="150.0" promptText="Choice 1" />
+           <MenuButton mnemonicParsing="false" text="Account" translateX="500.0" translateY="-33.0">
+           <items>
+             <MenuItem fx:id="infoButton" mnemonicParsing="false" text="Account info" />
+             <MenuItem fx:id="logoutButton" mnemonicParsing="false" text="Logout" />
+           </items>
+         </MenuButton>
+      </children>
+   </HBox>
+
+    <VBox>
+      <HBox prefHeight="100.0" prefWidth="200.0" translateX="75.0" translateY="10.0">
+         <children>
+              <Rectangle arcHeight="25" arcWidth="25" fill="#E7EAF8" height="537.0" width="279" />
+            <HBox prefHeight="100.0" prefWidth="200.0" translateX="-246.0">
+               <children>
+                  <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" translateY="24.0" />
+               </children>
+            </HBox>
+             <TreeView fx:id="treeView" onContextMenuRequested="#selectItem" onMouseClicked="#selectItem" prefWidth="200.0" translateX="-50.0" />
+             <TextField fx:id="searchField" translateX="-241.0" translateY="-39.0" />
+         </children>
+      </HBox>
+    </VBox>
+     <Rectangle arcHeight="25" arcWidth="25" fill="#3c4036" height="63.0" width="1280" />
+</VBox>
