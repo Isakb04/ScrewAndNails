@@ -15,4 +15,5 @@
             text="Messages" textAlignment="CENTER" translateY="-25.0"/>
     <Button fx:id="stockScreenButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" scaleX="2.0" scaleY="2.0" scaleZ="2.0"
             text="StockScreen" textAlignment="CENTER"/>
+
 </VBox>
