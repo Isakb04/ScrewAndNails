@@ -15,4 +15,17 @@ import java.io.IOException;
 
 public class addStockController {
 
+    @FXML
+    private TextField typeField;
+
+    @FXML
+    private TextField productTypeField;
+
+    @FXML
+    private TextField materialField;
+
+    @FXML
+    private TextField lengthField;
+
+
 }

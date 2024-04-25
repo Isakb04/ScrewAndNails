@@ -50,5 +50,18 @@ public class DatabaseConnection {
     return resultList;
     }
 
+    public static void addUser(String username, String password, String type, int id) {
+        openDBSession();
+        databaseSession.beginTransaction();
 
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setType(type);
+
+        databaseSession.save(user);
+
+        databaseSession.getTransaction().commit();
+        closeDBSession();
+    }
 }

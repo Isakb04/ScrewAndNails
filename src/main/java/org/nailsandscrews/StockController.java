@@ -21,8 +21,6 @@ import java.util.ResourceBundle;
 
 public class StockController implements Initializable {
 
-    public ImageView imageView;
-
     @FXML
     private TreeView treeView;
 
@@ -35,8 +33,39 @@ public class StockController implements Initializable {
     @FXML
     private MenuItem infoButton;
 
+    @FXML
+    private Button addStockButton;
+
+    @FXML
+    private ImageView imageView;
+
+    @FXML
+    private Label type;
+
+    @FXML
+    private Label productType;
+
+    @FXML
+    private Label material;
+
+    @FXML
+    private Label quantity;
+
+    @FXML
+    private Label length;
+
+    @FXML
+    private Label buyingPrice;
+
+    @FXML
+    private Label sellingPrice;
+
+    @FXML
+    private Label supplier;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         TreeItem<String> rootItem = new TreeItem<>("Stock");
         treeView.setShowRoot(false);
         treeView.setRoot(rootItem);
@@ -93,8 +122,8 @@ public class StockController implements Initializable {
         }
         searchField.textProperty().addListener(new ChangeListener<String>() {
 
-        @Override
-        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (newValue.isEmpty()) {
                     collapseProductTypes(treeView.getRoot());
                     return;
@@ -106,22 +135,37 @@ public class StockController implements Initializable {
         });
 
         logoutButton.setOnAction(e -> {
-        Parent root = null;
-        try {
-            root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
-        Stage stage = (Stage) treeView.getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.setTitle("Login");
-        stage.centerOnScreen();
-        stage.setResizable(false);
-        stage.show();
+            Parent root = null;
+            try {
+                root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            Stage stage = (Stage) treeView.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Login");
+            stage.centerOnScreen();
+            stage.setResizable(false);
+            stage.show();
         });
 
         infoButton.setOnAction(e -> {
             System.out.println("Info button clicked");
+        });
+
+        addStockButton.setOnAction(e -> {
+            Parent root = null;
+            try {
+                root = FXMLLoader.load(getClass().getResource("addStock.fxml"));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            Stage stage = (Stage) treeView.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Add Stock");
+            stage.centerOnScreen();
+            stage.setResizable(false);
+            stage.show();
         });
     }
 
@@ -141,6 +185,62 @@ public class StockController implements Initializable {
         if (item != null) {
             System.out.println(item.getValue());
         }
+        infoOfItem(item);
+
+    }
+
+    private void infoOfItem(TreeItem<String> item) {
+        // Get the selected item's value
+        String selectedItemValue = item.getValue();
+
+        // Get all stocks from the database
+        List<Stock> stocks = DatabaseConnection.getAllStocks();
+
+        // Find the stock that matches the selected item
+        for (Stock stock : stocks) {
+            // Check the level of the selected item in the TreeView
+            int level = treeView.getTreeItemLevel(item);
+
+            switch (level) {
+                case 1: // Type level
+                    if (stock.getType().equals(selectedItemValue)) {
+                        type.setText("Stock: " + stock.getType());
+                    }
+                    break;
+                case 2: // Product type level
+                    if (stock.getProduct_type().equals(selectedItemValue)) {
+                        productType.setText("Product Type: " + stock.getProduct_type());
+                    }
+                    break;
+                case 3: // Material level
+                    if (stock.getMaterial().equals(selectedItemValue)) {
+                        material.setText("Material: " + stock.getMaterial());
+                    }
+                    break;
+                case 4: // Length level
+                    if (stock.getLength().equals(selectedItemValue)) {
+                        length.setText("Length: " + stock.getLength());
+                        quantity.setText("Quantity: " + stock.getQuantity());
+                        buyingPrice.setText("Buying Price: " + stock.getBuying_price());
+                        sellingPrice.setText("Selling Price: " + stock.getSelling_price());
+                        supplier.setText("Supplier: " + stock.getSupplier());
+                    }
+                    break;
+            }
+
+            // Print debug information
+            System.out.println("Selected item: " + selectedItemValue);
+            System.out.println("Matching stock found: " + stock.getType());
+            System.out.println("Labels updated");
+
+            // Stop the loop once the matching stock is found
+            if (stock.getType().equals(selectedItemValue) ||
+                    stock.getProduct_type().equals(selectedItemValue) ||
+                    stock.getMaterial().equals(selectedItemValue) ||
+                    stock.getLength().equals(selectedItemValue)) {
+                break;
+            }
+        }
     }
 
     private void filterTree(String filter) {
@@ -157,18 +257,18 @@ public class StockController implements Initializable {
         }
     }
 
-   private void filter(TreeItem<String> item, String filter) {
-    if (item.getValue().toLowerCase().contains(filter.toLowerCase())) {
-        // If the item matches the filter, make sure it is visible and selected
-        TreeItem<String> parent = item.getParent();
-        while (parent != null) {
-            parent.setExpanded(true);
-            parent = parent.getParent();
-        }
-        treeView.getSelectionModel().select(item);
-    } else {
-        // If the item does not match the filter, make sure it is not visible
-        item.getParent().setExpanded(false);
+    private void filter(TreeItem<String> item, String filter) {
+        if (item.getValue().toLowerCase().contains(filter.toLowerCase())) {
+            // If the item matches the filter, make sure it is visible and selected
+            TreeItem<String> parent = item.getParent();
+            while (parent != null) {
+                parent.setExpanded(true);
+                parent = parent.getParent();
+            }
+            treeView.getSelectionModel().select(item);
+        } else {
+            // If the item does not match the filter, make sure it is not visible
+            item.getParent().setExpanded(false);
         }
     }
 

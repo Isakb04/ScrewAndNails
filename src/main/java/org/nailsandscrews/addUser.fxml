@@ -1,19 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeView?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Rectangle?>
-
-<VBox alignment="CENTER" prefHeight="706.0" prefWidth="1280.0" spacing="10.0"
-      stylesheets="@../resources/design/addUser.css" xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.nailsandscrews.addUserController">
+<?import javafx.scene.text.Font?>
 
 
 
-</VBox>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="344.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.nailsandscrews.addUserController">
+   <children>
+      <TextField fx:id="typeField" layoutX="193.0" layoutY="41.0" prefHeight="25.0" prefWidth="67.0" promptText="Type" />
+      <Label layoutX="194.0" layoutY="21.0" text="Type" />
+      <Button fx:id="userSearch" layoutX="194.0" layoutY="70.0" mnemonicParsing="false" onAction="searchUser" prefHeight="25.0" prefWidth="56.0" text="Search" />
+      <Button fx:id="deleteUser" layoutX="332.0" layoutY="70.0" mnemonicParsing="false" onAction="deleteUser" prefHeight="25.0" prefWidth="56.0" text="Delete" />
+      <Button fx:id="updateUser" layoutX="263.0" layoutY="70.0" mnemonicParsing="false" onAction="updateUser" prefHeight="25.0" prefWidth="56.0" text="Update" />
+      <Button fx:id="addUser" layoutX="82.0" layoutY="114.0" mnemonicParsing="false" onAction="#insertUser" text="Add User" />
+      <TextArea fx:id="resultArea" layoutX="7.0" layoutY="250.0" prefHeight="85.0" prefWidth="167.0" wrapText="true" />
+      <Label layoutX="9.0" layoutY="231.0" text="Result Console">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <TextField fx:id="searchByUsernameField" layoutX="268.0" layoutY="41.0" prefHeight="25.0" prefWidth="120.0" promptText="Search User" />
+      <Label layoutX="270.0" layoutY="21.0" text="User" />
+      <VBox layoutX="97.0" layoutY="24.0" spacing="4.0">
+         <children>
+            <TextField fx:id="addUsernameField" prefHeight="25.0" prefWidth="79.0" promptText="Username" />
+            <TextField fx:id="addPasswordField" prefHeight="25.0" prefWidth="79.0" promptText="Password" />
+            <TextField fx:id="addTypeField" prefHeight="25.0" prefWidth="79.0" promptText="Type" />
+         </children>
+      </VBox>
+      <VBox layoutX="9.0" layoutY="28.0" prefWidth="67.0" spacing="12.0">
+         <children>
+            <Label text="Username" />
+            <Label text="Password" />
+            <Label text="Type" />
+         </children>
+      </VBox>
+      <Separator layoutY="14.0" prefHeight="4.0" prefWidth="600.0" />
+      <Separator layoutX="180.0" layoutY="14.0" orientation="VERTICAL" prefHeight="333.0" prefWidth="7.0" />
+      <TableView fx:id="UserTable" editable="true" layoutX="193.0" layoutY="102.0" prefHeight="234.0" prefWidth="393.0" tableMenuButtonVisible="true">
+        <columns>
+            <TableColumn fx:id="IdColumn" prefWidth="57.0" text="Id" />
+          <TableColumn fx:id="usernameColumn" prefWidth="75.0" text="Username" />
+          <TableColumn fx:id="passwordColumn" prefWidth="73.0" text="Password" />
+            <TableColumn fx:id="typeColumn" prefWidth="79.0" text="Type" />
+            <TableColumn fx:id="createColumn" prefWidth="87.0" text="create_time" />
+        </columns>
+      </TableView>
+      <Button fx:id="searchUserButton" layoutX="396.0" layoutY="70.0" mnemonicParsing="false" onAction="#searchUsers" prefHeight="25.0" prefWidth="139.0" text="Search All Users" />
+   </children>
+</AnchorPane>

@@ -39,7 +39,7 @@ public class LoginController {
                 System.out.println("Login successful!");
                 // move to stock screen
                 Parent root = null;
-                if (type.equals("Admin")) {
+                if (username.equals("Admin")) {
                     try {
                         root = FXMLLoader.load(getClass().getResource("adminScreen.fxml"));
                     } catch (IOException ex) {
@@ -79,7 +79,7 @@ public class LoginController {
             }
             Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.setTitle("Register");
+            stage.setTitle("Admin Contact");
             stage.centerOnScreen();
             stage.setResizable(false);
             stage.show();

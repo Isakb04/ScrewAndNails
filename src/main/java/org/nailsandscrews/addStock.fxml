@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeView?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" prefHeight="706.0" prefWidth="1280.0" spacing="10.0"
-      stylesheets="@../resources/design/addStock.css" xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.nailsandscrews.addStockController">
-
-
-
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/11" fx:controller="org.nailsandscrews.DatabasePopulatorController">
+    <TreeView fx:id="databaseTreeView" prefHeight="400.0" prefWidth="300.0" />
+    <ComboBox fx:id="productTypeComboBox" prefWidth="200.0" promptText="Select a product type" />
+    <HBox spacing="10.0">
+        <Button fx:id="addButton" text="Add" onAction="handleAddButton" />
+        <Button fx:id="removeButton" text="Remove" onAction="#handleRemoveButton" />
+    </HBox>
 </VBox>

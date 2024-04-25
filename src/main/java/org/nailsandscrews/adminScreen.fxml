@@ -2,18 +2,15 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.VBox?>
-
+<?import javafx.scene.control.Label?>
 
 <VBox alignment="CENTER" prefHeight="550.0" prefWidth="350.0" spacing="10.0"
       stylesheets="@../resources/design/adminScreen.css" xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.nailsandscrews.adminScreenController">
 
-
-    <Button fx:id="addUserButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" scaleX="2.0" scaleY="2.0" scaleZ="2.0"
-            text="AddUser" textAlignment="CENTER" translateY="-50.0"/>
-    <Button fx:id="messagesButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" scaleX="2.0" scaleY="2.0" scaleZ="2.0"
-            text="Messages" textAlignment="CENTER" translateY="-25.0"/>
-    <Button fx:id="stockScreenButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" scaleX="2.0" scaleY="2.0" scaleZ="2.0"
-            text="StockScreen" textAlignment="CENTER"/>
-
+    <Label text="Admin Screen" translateY="-100.0"/>
+    <Button fx:id="addUserButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" scaleX="2.0" scaleY="2.0" scaleZ="2.0" text="AddUser" textAlignment="CENTER" translateY="-50.0" />
+    <Button fx:id="messagesButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" scaleX="2.0" scaleY="2.0" scaleZ="2.0" text="Messages" textAlignment="CENTER" translateY="-11.0" />
+    <Button fx:id="stockScreenButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" scaleX="2.0" scaleY="2.0" scaleZ="2.0" text="StockScreen" textAlignment="CENTER" translateY="28.0" />
+    <Button fx:id="logoutButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Logout" textAlignment="CENTER" translateY="80.0" />
 </VBox>
