@@ -27,48 +27,39 @@ public class LoginController {
     @FXML
     private Button loginButton;
 
+
     public void initialize() {
         usernameField.setOnAction(e -> passwordField.requestFocus());
         passwordField.setOnAction(e -> loginButton.fire());
         loginButton.setOnAction(e -> {
             String username = usernameField.getText();
             String password = passwordField.getText();
-            boolean isAuthenticated = DatabaseConnection.authenticateUser(username, password);
-            if (isAuthenticated) {
+            String userType = DatabaseConnection.authenticateUser(username, password);
+
+            if (userType != null) {
                 // Perform login action (e.g., show main application window)
-                System.out.println("Login successful!");
-                // move to stock screen
+                System.out.println("Login successful! User type: " + userType);
                 Parent root = null;
-                if (username.equals("Admin")) {
-                    try {
-                        root = FXMLLoader.load(getClass().getResource("adminScreen.fxml"));
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                    Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-                    stage.setScene(new Scene(root));
-                    stage.setTitle("Admin Screen");
-                    stage.centerOnScreen();
-                    stage.setResizable(false);
-                    stage.show();
-                }
-                else
-                    try {
+                try {
+                    if (userType.equals("Admin")) {
+                        root = FXMLLoader.load(getClass().getResource("AdminScreen.fxml"));
+                    } else {
                         root = FXMLLoader.load(getClass().getResource("StockScreen.fxml"));
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
                     }
-                    Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-                    stage.setScene(new Scene(root));
-                    stage.setTitle("Stock Screen");
-                    stage.centerOnScreen();
-                    stage.setResizable(false);
-                    stage.show();
-                } else {
-                    // Show error message (e.g., invalid credentials)
-                    System.out.println("Invalid username or password!");
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
                 }
-            });
+                Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.setTitle(userType + " Screen");
+                stage.centerOnScreen();
+                stage.setResizable(false);
+                stage.show();
+            } else {
+                // Show error message (e.g., invalid credentials)
+                System.out.println("Invalid username or password!");
+            }
+        });
 
         contactAdminButton.setOnAction(e -> {
             Parent root = null;

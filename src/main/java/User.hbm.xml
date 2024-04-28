@@ -7,5 +7,7 @@
         <id name = "ID" column = "userid" type = "int" />
         <property name = "username" column = "username" type = "string"/>
         <property name = "password" column = "password" type = "string"/>
+        <property name = "type" column = "type" type = "string"/>
+        <property name = "create_time" column = "create_time" type = "string"/>
     </class>
 </hibernate-mapping>

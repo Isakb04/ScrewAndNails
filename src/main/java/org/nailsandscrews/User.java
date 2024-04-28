@@ -1,6 +1,7 @@
 package org.nailsandscrews;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class User {
@@ -13,6 +14,8 @@ public class User {
 
 
     @Id
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getID() {
         return userid;
     }

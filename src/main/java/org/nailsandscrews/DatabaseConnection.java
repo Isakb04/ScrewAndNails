@@ -27,7 +27,7 @@ public class DatabaseConnection {
         System.out.println("Closed");
     }
 
-    public static boolean authenticateUser(String username, String password) {
+   public static String authenticateUser(String username, String password) {
         openDBSession();
         databaseSession.beginTransaction();
 
@@ -38,7 +38,13 @@ public class DatabaseConnection {
 
         databaseSession.getTransaction().commit();
         closeDBSession();
-        return !resultList.isEmpty();
+
+        if (!resultList.isEmpty()) {
+            User user = (User) resultList.get(0);
+            return user.getType(); // assuming getType() method exists in User class
+        }
+
+        return null;
     }
 
     public static List<Stock> getAllStocks() {

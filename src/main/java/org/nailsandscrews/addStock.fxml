@@ -3,11 +3,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/11" fx:controller="org.nailsandscrews.DatabasePopulatorController">
-    <TreeView fx:id="databaseTreeView" prefHeight="400.0" prefWidth="300.0" />
-    <ComboBox fx:id="productTypeComboBox" prefWidth="200.0" promptText="Select a product type" />
-    <HBox spacing="10.0">
-        <Button fx:id="addButton" text="Add" onAction="handleAddButton" />
-        <Button fx:id="removeButton" text="Remove" onAction="#handleRemoveButton" />
-    </HBox>
-</VBox>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="344.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.nailsandscrews.addStockController">
+
+
+
+</AnchorPane>

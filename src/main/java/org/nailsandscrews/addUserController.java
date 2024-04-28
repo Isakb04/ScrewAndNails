@@ -12,6 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,8 +91,14 @@ public class addUserController {
     private void updateUser() {
 
     }
+
+    @FXML
+    private void addUsernameField() {
+
+    }
+
     public void initialize() {
-        // display all users in the table
+        // display all users columns in the table
         DatabaseConnection.openDBSession();
         DatabaseConnection.databaseSession.beginTransaction();
         List<User> users = DatabaseConnection.databaseSession.createQuery("from User").getResultList();
@@ -105,56 +112,39 @@ public class addUserController {
         typeColumn.setCellValueFactory(new PropertyValueFactory<User, String>("type"));
         createColumn.setCellValueFactory(new PropertyValueFactory<User, String>("create_time"));
 
-        // add user to the sql database
+        // add user to the sql database and the tableview when the add user button is clicked from the add fields
         addUser.setOnAction(e -> {
-            String username = usernameField.getText();
-            String password = passwordField.getText();
-            String type = typeField.getText();
+            String username = addUsernameField.getText();
+            String password = addPasswordField.getText();
+            String type = addTypeField.getText();
+
             User user = new User();
             user.setUsername(username);
             user.setPassword(password);
             user.setType(type);
-            user.setCreate_time(java.time.LocalDate.now().toString());
+            user.setCreate_time(LocalDateTime.now().toString());
+
+
+
             DatabaseConnection.openDBSession();
             DatabaseConnection.databaseSession.beginTransaction();
             DatabaseConnection.databaseSession.save(user);
             DatabaseConnection.databaseSession.getTransaction().commit();
             DatabaseConnection.closeDBSession();
+
             UserTable.getItems().add(user);
-            usernameField.clear();
-            passwordField.clear();
-            typeField.clear();
+
+            addUsernameField.clear();
+            addPasswordField.clear();
+            addTypeField.clear();
+            //display the command to add users to the database in the resultArea
+            resultArea.setText("INSERT INTO User (username, password, type, create_time) VALUES ('" + username + "', '" + password + "', '" + type + "', '" + LocalDateTime.now().toString() + "');");
         });
 
-        // search button to search database by either username or type or both and display the result in the tableview
-        userSearch.setOnAction(e -> {
-            String username = searchByUsernameField.getText();
-            String type = searchByTypeField.getText();
-            DatabaseConnection.openDBSession();
-            DatabaseConnection.databaseSession.beginTransaction();
-            List resultList = new ArrayList<>();
-            if (username.isEmpty() && type.isEmpty()) {
-                resultList = DatabaseConnection.databaseSession.createQuery("from User").getResultList();
-            } else if (username.isEmpty()) {
-                resultList = DatabaseConnection.databaseSession.createQuery("from User where type = :type")
-                        .setParameter("type", type)
-                        .getResultList();
-            } else if (type.isEmpty()) {
-                resultList = DatabaseConnection.databaseSession.createQuery("from User where username = :username")
-                        .setParameter("username", username)
-                        .getResultList();
-            } else {
-                resultList = DatabaseConnection.databaseSession.createQuery("from User where username = :username and type = :type")
-                        .setParameter("username", username)
-                        .setParameter("type", type)
-                        .getResultList();
-            }
-            DatabaseConnection.databaseSession.getTransaction().commit();
-            DatabaseConnection.closeDBSession();
-            UserTable.setItems(FXCollections.observableArrayList(resultList));
-            searchByUsernameField.clear();
-            searchByTypeField.clear();
-        });
+
+        // search button to search the tableview by either username or type or both and display only the result in the tableview and searchAllUsers button to display all users
+
+
 
          openAdminPage.setOnAction(e -> {
             Parent root = null;
@@ -174,16 +164,19 @@ public class addUserController {
         // delete the selected user from the tableview and the database
         deleteUser.setOnAction(e -> {
             User user = UserTable.getSelectionModel().getSelectedItem();
-            if (user == null) {
-                return;
-            }
+            UserTable.getItems().remove(user);
+
             DatabaseConnection.openDBSession();
             DatabaseConnection.databaseSession.beginTransaction();
             DatabaseConnection.databaseSession.delete(user);
             DatabaseConnection.databaseSession.getTransaction().commit();
             DatabaseConnection.closeDBSession();
-            UserTable.getItems().remove(user);
+
+            //display the command to delete users from the database in the resultArea
+            resultArea.setText("DELETE FROM User WHERE ID = " + user.getID() + ";");
         });
+
+        // update the selected user from the tableview and the database
     }
 
 
