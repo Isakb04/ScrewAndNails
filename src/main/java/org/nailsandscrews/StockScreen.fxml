@@ -9,57 +9,69 @@
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
 <VBox alignment="CENTER" prefHeight="706.0" prefWidth="1280.0" spacing="10.0" stylesheets="@../resources/design/StockScreenStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.nailsandscrews.StockController">
 
-   <HBox prefHeight="63.0" prefWidth="1025.0" translateX="5.0">
+         <HBox prefHeight="63.0" prefWidth="1025.0" translateX="5.0">
       <children>
          <HBox prefHeight="100.0" prefWidth="200.0" />
       
-                            <Rectangle arcHeight="25" arcWidth="25" fill="#3c4036" height="97" scaleX="1.5" width="863.0" />
-         <ImageView fitHeight="63.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true" />
+                                                    <Rectangle arcHeight="25" arcWidth="25" fill="#3c4036" height="97" scaleX="1.5" width="863.0" />
       </children>
    </HBox>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" />
    <HBox prefHeight="100.0" prefWidth="200.0" translateX="33.0" translateY="-36.0">
       <children>
-         <ComboBox prefWidth="150.0" promptText="Choice 2" />
-         <ComboBox prefWidth="150.0" promptText="Choice 4" />
-           <Button fx:id="addStockButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" text="Add Stock" />
-           <MenuButton mnemonicParsing="false" text="Account">
-           <items>
-             <MenuItem fx:id="infoButton" mnemonicParsing="false" text="Account info" />
-             <MenuItem fx:id="logoutButton" mnemonicParsing="false" text="Logout" />
-           </items>
-         </MenuButton>
-          <TextField fx:id="searchField" />
+         <AnchorPane prefHeight="20.0" prefWidth="2012.0" translateX="-23.0">
+            <children>
+               <ComboBox layoutX="98.0" layoutY="-13.0" prefWidth="150.0" promptText="Choice 2" />
+               <ComboBox layoutX="271.0" layoutY="-13.0" prefWidth="150.0" promptText="Choice 4" />
+                 <MenuButton layoutX="1097.0" layoutY="-20.0" mnemonicParsing="false" text="Account">
+                 <items>
+                   <MenuItem fx:id="infoButton" mnemonicParsing="false" text="Account info" />
+                   <MenuItem fx:id="logoutButton" mnemonicParsing="false" text="Logout" />
+                 </items>
+               </MenuButton>
+               <ImageView fitHeight="74.0" fitWidth="83.0" layoutX="5.0" layoutY="-53.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitHeight="74.0" fitWidth="74.0" layoutX="2.0" layoutY="-73.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../resources/images/Designer.png" />
+                  </image>
+               </ImageView>
+            </children>
+         </AnchorPane>
       </children>
    </HBox>
 
-    <VBox>
+          <VBox>
       <HBox prefHeight="889.0" prefWidth="2301.0" translateX="75.0" translateY="10.0">
          <children>
-            <HBox prefHeight="100.0" prefWidth="200.0" translateX="-246.0">
-               <children>
-                    <Rectangle arcHeight="25" arcWidth="25" fill="#E7EAF8" height="537.0" translateX="289.0" width="279" />
-                   <ImageView fx:id="imageView" fitHeight="146.0" fitWidth="299.0" pickOnBounds="true" preserveRatio="true" translateX="20.0" translateY="25.0">
-                        <Image url="@../resources/images/unknown-image.jpg" />
-                    </ImageView>
-               </children>
-            </HBox>
-             <VBox prefHeight="537.0" prefWidth="263.0" translateX="-487.0">
-                 <Label fx:id="type" prefHeight="20.0" prefWidth="284.0" text="Type: no Product selected" translateX="-45.0" translateY="300.0" />
-                 <Label fx:id="productType" prefHeight="20.0" prefWidth="284.0" text="Product type: no Product selected" translateX="-45.0" translateY="300.0" />
-                 <Label fx:id="material" prefHeight="20.0" prefWidth="284.0" text="Material: no Product selected" translateX="-45.0" translateY="300.0" />
-                 <Label fx:id="length" prefHeight="20.0" prefWidth="284.0" text="Length: no Product selected" translateX="-45.0" translateY="300.0" />
-                 <Label fx:id="quantity" prefHeight="20.0" prefWidth="284.0" text="Quantity: no Product selected" translateX="-45.0" translateY="300.0" />
-                 <Label fx:id="buyingPrice" prefHeight="20.0" prefWidth="284.0" text="StockPrice: no Product selected" translateX="-45.0" translateY="300.0" />
-                 <Label fx:id="sellingPrice" prefHeight="20.0" prefWidth="284.0" text="Price: no Product selected" translateX="-45.0" translateY="300.0" />
-                 <Label fx:id="supplier" prefHeight="20.0" prefWidth="284.0" text="supplier: no Product selected" translateX="-45.0" translateY="300.0" />
+            <HBox prefHeight="100.0" prefWidth="200.0" translateX="-246.0" />
+             <VBox prefHeight="561.0" prefWidth="273.0" translateX="-487.0">
+               <AnchorPane prefHeight="327.0" prefWidth="389.0">
+                  <children>
+                       <Rectangle arcHeight="25" arcWidth="25" fill="#E7EAF8" height="537.0" layoutX="307.0" layoutY="24.0" width="279" />
+                       <Label fx:id="type" layoutX="307.0" layoutY="373.0" prefHeight="20.0" prefWidth="284.0" text="Type: no Product selected" />
+                       <Label fx:id="productType" layoutX="307.0" layoutY="293.0" prefHeight="20.0" prefWidth="284.0" text="Product type: no Product selected" />
+                       <Label fx:id="material" layoutX="307.0" layoutY="433.0" prefHeight="20.0" prefWidth="284.0" text="Material: no Product selected" />
+                       <Label fx:id="length" layoutX="307.0" layoutY="413.0" prefHeight="20.0" prefWidth="284.0" text="Length: no Product selected" />
+                       <Label fx:id="quantity" layoutX="307.0" layoutY="313.0" prefHeight="20.0" prefWidth="284.0" text="Quantity: no Product selected" />
+                       <Label fx:id="buyingPrice" layoutX="307.0" layoutY="353.0" prefHeight="20.0" prefWidth="284.0" text="StockPrice: no Product selected" />
+                       <Label fx:id="supplier" layoutX="307.0" layoutY="333.0" prefHeight="20.0" prefWidth="284.0" text="supplier: no Product selected" />
+                       <Label fx:id="sellingPrice" layoutX="307.0" layoutY="393.0" prefHeight="20.0" prefWidth="284.0" text="Price: no Product selected" />
+                      <TreeView fx:id="treeView" layoutX="707.0" layoutY="67.0" onContextMenuRequested="#selectItem" onMouseClicked="#selectItem" prefHeight="493.0" prefWidth="284.0" />
+                      <ImageView fx:id="imageView" fitHeight="146.0" fitWidth="299.0" layoutX="317.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
+                           <Image url="@../resources/images/unknown-image.jpg" />
+                       </ImageView>
+                      <TextField fx:id="searchField" layoutX="712.0" layoutY="22.0" prefHeight="30.0" prefWidth="279.0" />
+                       <Button fx:id="addStockButton" layoutX="377.0" layoutY="511.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" text="Add Stock" />
+                  </children>
+               </AnchorPane>
              </VBox>
-             <TreeView fx:id="treeView" onContextMenuRequested="#selectItem" onMouseClicked="#selectItem" prefWidth="200.0" translateX="-400.0" />
          </children>
       </HBox>
     </VBox>

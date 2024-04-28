@@ -4,17 +4,21 @@ import javax.persistence.*;
 
 @Entity
 public class User {
-    private int ID;
+    private int userid;
     private String username;
     private String password;
     private String type;
+    private String create_time;
+
+
 
     @Id
     public int getID() {
-        return ID;
+        return userid;
     }
+
     public void setID(int ID) {
-        this.ID = ID;
+        this.userid = ID;
     }
 
     public String getUsername() {
@@ -40,4 +44,13 @@ public class User {
     public void setType(String type) {
         this.type = type;
     }
+
+    public String getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(String create_time) {
+        this.create_time = create_time;
+    }
+
 }

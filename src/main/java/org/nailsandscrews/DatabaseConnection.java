@@ -1,5 +1,7 @@
 package org.nailsandscrews;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.hibernate.*;
 import org.hibernate.cfg.*;
 
@@ -50,18 +52,13 @@ public class DatabaseConnection {
     return resultList;
     }
 
-    public static void addUser(String username, String password, String type, int id) {
-        openDBSession();
-        databaseSession.beginTransaction();
+    public static List<User> getAllUsers() {
+    openDBSession();
+    databaseSession.beginTransaction();
 
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setType(type);
+    List<User> resultList = databaseSession.createQuery("from User").getResultList();
 
-        databaseSession.save(user);
-
-        databaseSession.getTransaction().commit();
-        closeDBSession();
-    }
-}
+    databaseSession.getTransaction().commit();
+    closeDBSession();
+    return resultList;
+    }}
