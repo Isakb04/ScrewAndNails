@@ -189,3 +189,7 @@ Q.idea/sonarlint/securityhotspotstore/e/8/e88a0e84941c19c6c8a6ae21297a6be1b12208
 Q.idea/sonarlint/securityhotspotstore/e/3/e3c1e48f2dd3237a722f9372191541c3abc0de74,f\3\f327f8b6759ab8495ca49f26e7067154b200d82c
 Å
 Q.idea/sonarlint/securityhotspotstore/e/d/ed12688499a0cdf244779e6d8231e921025f6c46,4\1\410a220c92ba6da974901e914c3532138c4396ce
+7
+LICENSE,0\3\0398ccd0f49298b10a3d76a47800d2ebecd49859
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
