@@ -17,6 +17,8 @@ public class Stock {
     private String last_updated;
 
     @Id
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }

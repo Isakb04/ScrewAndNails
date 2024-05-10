@@ -1,0 +1,14 @@
+
+p
+java:S3740""/Provide the parametrized type for this generic.(ÜÄØåüÿÿÿÿJ$25fbf767-ce6a-45a0-b04e-4e38e6f992c2
+v
+java:S1118
+":Add a private constructor to hide the implicit public one.(¿Àò€J$29a3d829-53d0-4e57-bfef-0497d3f7061a
+f	java:S106"+Replace this use of System.out by a logger.(Ó¹J$8a99dc76-744d-412f-a13c-62ee812bf793
+f	java:S106"+Replace this use of System.out by a logger.(×À£îJ$daadb8a4-7fd0-4961-9c33-45f028ed1513
+k	java:S106"+Replace this use of System.out by a logger.(ëƒ¤²úÿÿÿÿJ$b0c220f2-6e67-4283-b3c8-d500e10d274a
+k	java:S106"+Replace this use of System.out by a logger.(ÖôíéøÿÿÿÿJ$991f66d0-bc72-44d1-abc2-a6e34c88076b
+y
+java:S1128"=Remove this unused import 'javafx.collections.FXCollections'.(´¶²ÆJ$e342aaee-e6fb-4a06-b182-e307d09eea8e
+
+java:S1128">Remove this unused import 'javafx.collections.ObservableList'.(ÄÜ€éüÿÿÿÿJ$1d59a6c2-c025-4ab2-a9f4-5e0bb6a95f3c

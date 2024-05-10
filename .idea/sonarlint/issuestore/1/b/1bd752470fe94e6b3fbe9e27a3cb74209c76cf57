@@ -1,0 +1,12 @@
+
+	java:S112'"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8’É×Ğò1J$b9a5c57c-1891-472f-aeb2-4b19bd21ab3e
+	java:S1126"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8“É×Ğò1J$99cdd7e9-7f1d-46ab-9b83-2b14d6d810a9
+	java:S112E"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8“É×Ğò1J$fa50f326-1d56-4b40-97f6-def5bc0a2e8c
+	java:S112T"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8”É×Ğò1J$a74a6aef-3562-444b-999f-36e8c22e88b7
+	java:S112c"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8”É×Ğò1J$200b5ddd-1761-4055-be00-30960bfd80be
+	java:S101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(ü»ÑD8™É×Ğò1J$844e8d46-6973-47ae-b3b7-b0cf50f9a66c
+‚
+java:S1128	"?Remove this unused import 'javafx.scene.control.PasswordField'.(êú´Ë8ĞÊ×Ğò1J$e0a01e4a-e6e1-43cf-bc62-47395a28ec62
+~
+java:S1128
+";Remove this unused import 'javafx.scene.control.TextField'.(¨¢¤¶8ĞÊ×Ğò1J$2d9573ac-1481-4b6a-b4d6-26de21ae1704

@@ -1,12 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="344.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.nailsandscrews.addStockController">
-
-
-
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="344.0" prefWidth="1147.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.nailsandscrews.addStockController">
+   <children>
+      <TextField fx:id="typeField" layoutX="181.0" layoutY="42.0" prefHeight="25.0" prefWidth="67.0" promptText="Type" />
+      <Label layoutX="182.0" layoutY="22.0" text="Product Type" />
+      <Button fx:id="stockSearch" layoutX="182.0" layoutY="71.0" mnemonicParsing="false" onAction="#searchStock" prefHeight="25.0" prefWidth="56.0" text="Search" />
+      <Button fx:id="deleteStock" layoutX="254.0" layoutY="71.0" mnemonicParsing="false" onAction="#deleteStock" prefHeight="25.0" prefWidth="56.0" text="Delete" />
+      <Button fx:id="addStock" layoutX="87.0" layoutY="234.0" mnemonicParsing="false" onAction="#insertStock" text="Add Stock" />
+      <TextArea fx:id="resultArea" layoutX="7.0" layoutY="285.0" prefHeight="50.0" prefWidth="151.0" wrapText="true" />
+      <Label layoutX="9.0" layoutY="267.0" text="Result Console">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <TextField fx:id="searchBySupplierField" layoutX="280.0" layoutY="42.0" prefHeight="25.0" prefWidth="120.0" promptText="Search Supplier" />
+      <Label layoutX="280.0" layoutY="22.0" text="Supplier" />
+      <VBox layoutX="83.0" layoutY="26.0" prefHeight="174.0" prefWidth="79.0" spacing="4.0">
+         <children>
+            <TextField fx:id="addTypeField" prefHeight="25.0" prefWidth="79.0" promptText="Type" />
+            <TextField fx:id="addProductTypeField" prefHeight="25.0" prefWidth="79.0" promptText="Product" />
+            <TextField fx:id="addMaterialField" prefHeight="25.0" prefWidth="79.0" promptText="Material" />
+            <TextField fx:id="addLengthField" prefHeight="25.0" prefWidth="79.0" promptText="Length" />
+            <TextField fx:id="addSupplierField" prefHeight="25.0" prefWidth="79.0" promptText="Supplier" />
+            <TextField fx:id="addStockPriceField" prefHeight="25.0" prefWidth="79.0" promptText="Stock Price" />
+            <TextField fx:id="addSellPriceField" prefHeight="25.0" prefWidth="79.0" promptText="Sell Price" />
+         </children>
+      </VBox>
+      <VBox layoutX="9.0" layoutY="28.0" prefHeight="197.0" prefWidth="83.0" spacing="12.0">
+         <children>
+            <Label text="Type" />
+            <Label prefHeight="17.0" prefWidth="97.0" text="Product Type" />
+            <Label text="Material" />
+            <Label text="Length" />
+            <Label prefHeight="17.0" prefWidth="59.0" text="Supplier" />
+            <Label text="Stock Price" />
+            <Label text="Sell Price" />
+         </children>
+      </VBox>
+      <Separator layoutY="14.0" prefHeight="3.0" prefWidth="1147.0" />
+      <Separator layoutX="162.0" layoutY="14.0" orientation="VERTICAL" prefHeight="333.0" prefWidth="7.0" />
+      <TableView fx:id="StockTable" editable="true" layoutX="168.0" layoutY="102.0" prefHeight="234.0" prefWidth="963.0" tableMenuButtonVisible="true">
+        <columns>
+            <TableColumn fx:id="IdColumn" prefWidth="30.0" text="Id" />
+          <TableColumn fx:id="typeColumn" prefWidth="86.66664123535156" text="Type" />
+          <TableColumn fx:id="productTypeColumn" prefWidth="105.3333740234375" text="Product Type" />
+            <TableColumn fx:id="materialColumn" prefWidth="64.6666259765625" text="Material" />
+            <TableColumn fx:id="lengthColumn" prefWidth="70.00003051757812" text="Length" />
+            <TableColumn fx:id="buyingPriceColumn" prefWidth="104.6666259765625" text="Buying Price" />
+            <TableColumn fx:id="sellingPriceColumn" prefWidth="87.0" text="Selling Price" />
+            <TableColumn fx:id="QuantityColumn" prefWidth="87.0" text="Quantity" />
+            <TableColumn fx:id="supplierColumn" prefWidth="87.0" text="Supplier" />
+            <TableColumn fx:id="dateAddedColumn" prefWidth="102.666748046875" text="Date Added" />
+            <TableColumn fx:id="lastUpdatedColumn" prefWidth="102.666748046875" text="Last Updated" />
+           
+        </columns>
+      </TableView>
+      <Button fx:id="searchStockButton" layoutX="402.0" layoutY="71.0" mnemonicParsing="false" onAction="#searchAllStock" prefHeight="25.0" prefWidth="139.0" text="Search All Stock" />
+      <Button fx:id="openAdminPage" layoutX="979.0" layoutY="26.0" mnemonicParsing="false" onAction="#openAdminPage" prefHeight="25.0" prefWidth="151.0" text="Return to admin page" />
+   </children>
 </AnchorPane>

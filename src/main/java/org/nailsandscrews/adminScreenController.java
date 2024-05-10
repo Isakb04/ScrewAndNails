@@ -27,6 +27,9 @@ public class adminScreenController {
     @FXML
     private Button logoutButton;
 
+    @FXML
+    private Button addStockButton;
+
     public void initialize() {
     addUserButton.setOnAction(e -> {
         Parent root = null;
@@ -83,6 +86,21 @@ public class adminScreenController {
         Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.setTitle("Login");
+        stage.centerOnScreen();
+        stage.setResizable(false);
+        stage.show();
+    });
+
+    addStockButton.setOnAction(e -> {
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("addStock.fxml"));
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Add Stock");
         stage.centerOnScreen();
         stage.setResizable(false);
         stage.show();

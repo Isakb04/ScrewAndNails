@@ -1,0 +1,51 @@
+
+‡	java:S112’"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿJ$f746b892-f90f-46e1-b5f3-4e669b73f0db
+•
+java:S2293e"YReplace the type specification in this constructor call with the diamond operator ("<>").(ßùèØJ$7043ad0c-07f1-4a98-8718-4b470c901d6f
+•
+java:S2293f"YReplace the type specification in this constructor call with the diamond operator ("<>").(³€ö´J$e092acf6-8f56-4103-89f7-4ade5de4eabd
+•
+java:S2293g"YReplace the type specification in this constructor call with the diamond operator ("<>").(×æ²ØJ$eba6fb54-555f-494e-b03f-638013f0f342
+š
+java:S2293h"YReplace the type specification in this constructor call with the diamond operator ("<>").(ä°’ÌøÿÿÿÿJ$39d25b8e-0e6b-4b4e-8de5-541c93244d50
+•
+java:S2293i"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ê¡ö±J$1c7bbc31-aafb-42e5-b873-93080c64bf07
+”
+java:S1104"XMake addTypeField a static final constant or non-public and provide accessors if needed.(£×ÇİJ$4c1cc4d7-3558-4ea1-a106-44a345024f37
+
+java:S1104"\Make addUsernameField a static final constant or non-public and provide accessors if needed.(™¶£ûÿÿÿÿJ$8060a4b6-cc8a-48e8-a106-34899e1ca03e
+˜
+java:S1104"\Make addPasswordField a static final constant or non-public and provide accessors if needed.(«¯ƒJ$c9778574-d475-4e8a-8151-204c7517d6bf
+š
+java:S1104"YMake addUserButton a static final constant or non-public and provide accessors if needed.(ûîâûÿÿÿÿJ$783a6886-1341-45ab-9a9c-961cc31cbcf4
+˜
+java:S1104"\Make searchUserButton a static final constant or non-public and provide accessors if needed.(ªïìùJ$de1908fd-a2fa-48d9-90d5-6773b6cd43f4
+
+java:S1104"\Make deleteUserButton a static final constant or non-public and provide accessors if needed.(É¼ãÃüÿÿÿÿJ$b6ea37eb-7249-4a2a-b5ba-9efeb0104ec9
+˜
+java:S1104"\Make updateUserButton a static final constant or non-public and provide accessors if needed.(‡ô”ÀJ$11ba755d-4b98-4afe-8494-c5417554b3a1
+¢
+java:S1104"aMake searchByUsernameField a static final constant or non-public and provide accessors if needed.(¦©ËÖÿÿÿÿÿJ$d7688d80-3f5b-4138-b5e8-f6577c0dc0e0
+™
+java:S1104"]Make searchByTypeField a static final constant or non-public and provide accessors if needed.(‡²ğíJ$03395f3d-fa32-4d37-9671-6327d2d67e82
+’
+java:S1104"VMake resultArea a static final constant or non-public and provide accessors if needed.(“˜¢ÿJ$8a326621-8444-469f-8369-4ee7ba256841
+ˆ	java:S101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(êÖÈÇJ$0d6de5b3-fa7e-435d-a9c3-e493bad8bfe5
+“	java:S1167"SRename this field "IdColumn" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ºû­ÚüÿÿÿÿJ$5514ec3d-be91-4291-9f83-8f147782ebca
+	java:S116F"TRename this field "UserTable" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(€ãÈ‹J$ede85e0b-5b50-4c47-8c77-1e4b7518db61
+Â
+java:S1186I"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(óìéûûÿÿÿÿJ$dae22e70-94c5-479e-ac67-b03b3a76bb90
+½
+java:S1186N"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ë­è¶J$80d1bfaa-5b5e-43f1-8f41-c054063e20db
+Â
+java:S1186S"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(™ÕÂ¹øÿÿÿÿJ$28e6fc31-f4e5-4e85-bee6-01e1f04b20bf
+Â
+java:S1186X"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(«ßÃıÿÿÿÿJ$a966df4c-72d9-4b70-909d-f2f626015614
+¾
+java:S1186¯"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(İÔÅ‡J$6dc123fd-1aae-44b6-8104-c4ea6180b5bd
+¾
+java:S1186³"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¼¿Á®J$a87023de-f436-4740-a287-cf44ee85d7ed
+¾
+java:S1186·"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¯ıáİJ$fb4647c8-f482-416b-9d17-c7d64a489caa
+l
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒJ$3710b9dc-e6d9-4cdb-832b-17a2d5615270

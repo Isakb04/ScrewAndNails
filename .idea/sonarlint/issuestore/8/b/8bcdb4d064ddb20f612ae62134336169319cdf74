@@ -1,0 +1,13 @@
+
+”
+java:S1450"SRemove the "root" field and declare it as a local variable in the relevant methods.(Ð´”ðûÿÿÿÿJ$7604e82e-d89c-460b-ba40-73d462e1bb1c
+s
+java:S1117"8Rename "root" which hides the field declared at line 16.(«‘æJ$fea46279-8ece-4b28-b3ce-5abc8bde6547
+t
+java:S1117#"8Rename "root" which hides the field declared at line 16.(Úà¹ÂJ$d75fe630-a827-4a3a-9d18-0828be48c369
+y
+java:S1117+"8Rename "root" which hides the field declared at line 16.(”ŸÄ…ùÿÿÿÿJ$5e97024c-1865-4a90-9ca1-9691b4d544a8
+t
+java:S11173"8Rename "root" which hides the field declared at line 16.(ÈóÓÓJ$9769be56-c6fe-4c46-a842-51fa66b5fb8e
+y
+java:S1117;"8Rename "root" which hides the field declared at line 16.(í„ÀŠøÿÿÿÿJ$3e154aa8-61cf-47d2-b490-b434ea774cb6

@@ -2,14 +2,17 @@ package org.nailsandscrews;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.AreaChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,6 +23,19 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class StockController implements Initializable {
+
+    public AreaChart sellData;
+
+    public AreaChart buyData;
+    public ImageView stockProductImage;
+    public TextField buyStockAmount;
+    public TextField sellStockAmount;
+    public Button buyStockAmountButton;
+    public Button sellStockAmountButton;
+    public AnchorPane rightScreen;
+
+    @FXML
+    private ProgressBar quantityBar;
 
     @FXML
     private TreeView treeView;
@@ -34,7 +50,7 @@ public class StockController implements Initializable {
     private MenuItem infoButton;
 
     @FXML
-    private Button addStockButton;
+    private Button sellOrBuyStockButton;
 
     @FXML
     private ImageView imageView;
@@ -65,12 +81,18 @@ public class StockController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        quantityBar.setVisible(false);
+
 
         TreeItem<String> rootItem = new TreeItem<>("Stock");
         treeView.setShowRoot(false);
         treeView.setRoot(rootItem);
 
-        List<Stock> stocks = DatabaseConnection.getAllStocks();
+        DatabaseConnection.openDBSession();
+        DatabaseConnection.databaseSession.beginTransaction();
+        List<Stock> stocks = DatabaseConnection.databaseSession.createQuery("from Stock").getResultList();
+        DatabaseConnection.databaseSession.getTransaction().commit();
+        DatabaseConnection.closeDBSession();
 
         // Create a Map to store the TreeItems for each type
         Map<String, TreeItem<String>> typeItems = new HashMap<>();
@@ -120,17 +142,21 @@ public class StockController implements Initializable {
                 return item;
             });
         }
-        searchField.textProperty().addListener(new ChangeListener<String>() {
 
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (newValue.isEmpty()) {
-                    collapseProductTypes(treeView.getRoot());
-                    return;
-                }
-                if (newValue.length() > 1) {
-                    filterTree(newValue);
-                }
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isEmpty()) {
+                collapseProductTypes(treeView.getRoot());
+                return;
+            }
+            if (newValue.length() > 1) {
+                filterTree(newValue);
+            }
+        });
+
+        //only take ints as input and when buyStockAmountButton is pressed add the amount to the quality in the stock database of the selected stock item
+        buyStockAmount.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                buyStockAmount.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
 
@@ -153,20 +179,15 @@ public class StockController implements Initializable {
             System.out.println("Info button clicked");
         });
 
-        addStockButton.setOnAction(e -> {
-            Parent root = null;
-            try {
-                root = FXMLLoader.load(getClass().getResource("addStock.fxml"));
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+        rightScreen.setVisible(false);
+        sellOrBuyStockButton.setOnAction(e -> {
+            if (rightScreen.isVisible()) {
+                rightScreen.setVisible(false);
+            } else {
+                rightScreen.setVisible(true);
             }
-            Stage stage = (Stage) treeView.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Add Stock");
-            stage.centerOnScreen();
-            stage.setResizable(false);
-            stage.show();
         });
+
     }
 
 
@@ -190,58 +211,78 @@ public class StockController implements Initializable {
     }
 
     private void infoOfItem(TreeItem<String> item) {
-        // Get the selected item's value
-        String selectedItemValue = item.getValue();
+    // Get the selected item's value
+    String selectedItemValue = item.getValue();
 
-        // Get all stocks from the database
-        List<Stock> stocks = DatabaseConnection.getAllStocks();
+    // Get all stocks from the database
+    List<Stock> stocks = DatabaseConnection.getAllStocks();
 
-        // Find the stock that matches the selected item
-        for (Stock stock : stocks) {
-            // Check the level of the selected item in the TreeView
-            int level = treeView.getTreeItemLevel(item);
+    // Find the stock that matches the selected item
+    for (Stock stock : stocks) {
+        // Check the level of the selected item in the TreeView
+        int level = treeView.getTreeItemLevel(item);
 
-            switch (level) {
-                case 1: // Type level
-                    if (stock.getType().equals(selectedItemValue)) {
-                        type.setText("Stock: " + stock.getType());
-                    }
-                    break;
-                case 2: // Product type level
-                    if (stock.getProduct_type().equals(selectedItemValue)) {
-                        productType.setText("Product Type: " + stock.getProduct_type());
-                    }
-                    break;
-                case 3: // Material level
-                    if (stock.getMaterial().equals(selectedItemValue)) {
-                        material.setText("Material: " + stock.getMaterial());
-                    }
-                    break;
-                case 4: // Length level
-                    if (stock.getLength().equals(selectedItemValue)) {
-                        length.setText("Length: " + stock.getLength());
-                        quantity.setText("Quantity: " + stock.getQuantity());
-                        buyingPrice.setText("Buying Price: " + stock.getBuying_price());
-                        sellingPrice.setText("Selling Price: " + stock.getSelling_price());
-                        supplier.setText("Supplier: " + stock.getSupplier());
-                    }
-                    break;
-            }
-
-            // Print debug information
-            System.out.println("Selected item: " + selectedItemValue);
-            System.out.println("Matching stock found: " + stock.getType());
-            System.out.println("Labels updated");
-
-            // Stop the loop once the matching stock is found
-            if (stock.getType().equals(selectedItemValue) ||
-                    stock.getProduct_type().equals(selectedItemValue) ||
-                    stock.getMaterial().equals(selectedItemValue) ||
-                    stock.getLength().equals(selectedItemValue)) {
+        switch (level) {
+            case 1: // Type level
+                if (stock.getType().equals(selectedItemValue)) {
+                    type.setText("Stock: " + stock.getType());
+                }
+                quantityBar.setVisible(false);
                 break;
-            }
+            case 2: // Product type level
+                if (stock.getProduct_type().equals(selectedItemValue)) {
+                    productType.setText("Product Type: " + stock.getProduct_type());
+                }
+                quantityBar.setVisible(false);
+                break;
+            case 3: // Material level
+                if (stock.getMaterial().equals(selectedItemValue)) {
+                    material.setText("Material: " + stock.getMaterial());
+                }
+                quantityBar.setVisible(false);
+                break;
+            case 4: // Length level
+                if (stock.getLength().equals(selectedItemValue)) {
+                    length.setText("Length: " + stock.getLength());
+                    quantity.setText("Quantity: " + stock.getQuantity());
+
+                    quantityBar.setProgress((double) stock.getQuantity() / 500);
+                    if (stock.getQuantity() < 165) {
+                        quantityBar.setStyle("-fx-accent: red;");
+                    } else if (stock.getQuantity() < 330) {
+                        quantityBar.setStyle("-fx-accent: yellow;");
+                    } else {
+                        quantityBar.setStyle("-fx-accent: green;");
+                    }
+
+                    buyingPrice.setText("Buying Price: " + stock.getBuying_price());
+                    sellingPrice.setText("Selling Price: " + stock.getSelling_price());
+                    supplier.setText("Supplier: " + stock.getSupplier());
+
+                    // Make the quantityBar visible
+                    quantityBar.setVisible(true);
+                }
+                break;
+            default:
+                // Make the quantityBar invisible when a non-length item is selected
+                quantityBar.setVisible(false);
+                break;
+        }
+
+        // Print debug information
+        System.out.println("Selected item: " + selectedItemValue);
+        System.out.println("Matching stock found: " + stock.getType());
+        System.out.println("Labels updated");
+
+        // Stop the loop once the matching stock is found
+        if (stock.getType().equals(selectedItemValue) ||
+                stock.getProduct_type().equals(selectedItemValue) ||
+                stock.getMaterial().equals(selectedItemValue) ||
+                stock.getLength().equals(selectedItemValue)) {
+            break;
         }
     }
+}
 
     private void filterTree(String filter) {
         // Get the root item
@@ -281,4 +322,37 @@ public class StockController implements Initializable {
         }
     }
 
+    public void searchStock() {
+        System.out.println("Search stock");
+    }
+
+    //set test data into buyData and sellData
+    public void setTestData() {
+        //set test data into buyData
+        sellData.getData().add(new AreaChart.Series("Sell", FXCollections.observableArrayList(
+                new AreaChart.Data(1, 10),
+                new AreaChart.Data(2, 20),
+                new AreaChart.Data(3, 30),
+                new AreaChart.Data(4, 40),
+                new AreaChart.Data(5, 50),
+                new AreaChart.Data(6, 60),
+                new AreaChart.Data(7, 70),
+                new AreaChart.Data(8, 80),
+                new AreaChart.Data(9, 90),
+                new AreaChart.Data(10, 100)
+        )));
+        //set test data into sellData
+        buyData.getData().add(new AreaChart.Series("Buy", FXCollections.observableArrayList(
+                new AreaChart.Data(1, 100),
+                new AreaChart.Data(2, 90),
+                new AreaChart.Data(3, 80),
+                new AreaChart.Data(4, 70),
+                new AreaChart.Data(5, 60),
+                new AreaChart.Data(6, 50),
+                new AreaChart.Data(7, 40),
+                new AreaChart.Data(8, 30),
+                new AreaChart.Data(9, 20),
+                new AreaChart.Data(10, 10)
+        )));
+    }
 }

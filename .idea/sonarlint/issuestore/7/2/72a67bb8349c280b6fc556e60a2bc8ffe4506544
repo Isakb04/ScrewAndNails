@@ -1,0 +1,74 @@
+
+	java:S112‡"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8µöĞò1J$e805e653-40b6-40d5-95b7-2a748180bad3
+¡
+java:S2293W"YReplace the type specification in this constructor call with the diamond operator ("<>").(×ÀŞÃÿÿÿÿÿ8„µöĞò1J$52d345dd-cc64-4699-a0c7-ce02c5650dae
+¡
+java:S2293X"YReplace the type specification in this constructor call with the diamond operator ("<>").(æ…ÂÕøÿÿÿÿ8…µöĞò1J$ebdca7a3-84f7-4bce-a7b6-b786dbdad90d
+¡
+java:S2293Y"YReplace the type specification in this constructor call with the diamond operator ("<>").(ó¡›Êıÿÿÿÿ8…µöĞò1J$9085c26f-125f-4e54-adf8-658970bd1acd
+¡
+java:S2293Z"YReplace the type specification in this constructor call with the diamond operator ("<>").(ú°ˆöÿÿÿÿÿ8…µöĞò1J$2be5a7f2-6eb5-49c5-8877-ba91ff927b20
+¡
+java:S2293["YReplace the type specification in this constructor call with the diamond operator ("<>").(‘êÅ´ÿÿÿÿÿ8†µöĞò1J$3bb27733-2d78-4be4-9abf-174479574ffc
+œ
+java:S2293\"YReplace the type specification in this constructor call with the diamond operator ("<>").(€ÕÁ 8†µöĞò1J$5c2891e0-ea3d-4085-8336-9e0516c90d70
+œ
+java:S2293]"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÃçÉÀ8†µöĞò1J$123dc10b-29b4-4a1d-b43c-ec9cc4143ff5
+¡
+java:S2293^"YReplace the type specification in this constructor call with the diamond operator ("<>").(ô¬ÿÌşÿÿÿÿ8‡µöĞò1J$b0f870e3-e85a-4b15-b848-2c00477ec571
+¡
+java:S2293_"YReplace the type specification in this constructor call with the diamond operator ("<>").(µµ«Üüÿÿÿÿ8‡µöĞò1J$20d506d0-3521-474e-abbf-803ecdf61491
+¡
+java:S2293`"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÿÀ®°øÿÿÿÿ8‡µöĞò1J$02d74219-a74f-41d9-9163-bf5a97bd9235
+¡
+java:S2293a"YReplace the type specification in this constructor call with the diamond operator ("<>").(ôàŞûÿÿÿÿ8‡µöĞò1J$0cb0bdb6-4ca3-4f5f-93a9-3142c8ae99c8
+
+java:S1104"UMake typeField a static final constant or non-public and provide accessors if needed.(äÄ•üÿÿÿÿ8ŠµöĞò1J$0129c365-c6a3-4969-89bd-eb6924246951
+š
+java:S1104"WMake stockSearch a static final constant or non-public and provide accessors if needed.(ì¥Ã¯8ŠµöĞò1J$6143e674-ab0b-44ae-843d-701f06af7b67
+Ÿ
+java:S1104"WMake deleteStock a static final constant or non-public and provide accessors if needed.(ÖÄëıÿÿÿÿ8ŠµöĞò1J$769c9a1d-dfd0-4b81-bba2-940ed5a3dc1b
+œ
+java:S1104"TMake addStock a static final constant or non-public and provide accessors if needed.(˜å¨ñúÿÿÿÿ8‹µöĞò1J$6ab29c48-4490-4d88-b575-f95373b6d044
+™
+java:S1104"VMake resultArea a static final constant or non-public and provide accessors if needed.(“˜¢ÿ8‹µöĞò1J$1ca9ee82-2295-410a-a138-a63927a2e4be
+©
+java:S1104"aMake searchBySupplierField a static final constant or non-public and provide accessors if needed.(¹¢ƒÎüÿÿÿÿ8‹µöĞò1J$11e7822b-edc6-46c4-bc67-104789ff5a0e
+›
+java:S1104"XMake addTypeField a static final constant or non-public and provide accessors if needed.(£×Çİ8‹µöĞò1J$c96cb363-1df1-432c-9d8a-2f38c37807ef
+§
+java:S1104"_Make addProductTypeField a static final constant or non-public and provide accessors if needed.(’©Àúøÿÿÿÿ8‹µöĞò1J$75114885-a54b-4ac6-bd5d-8a8ac9790aa3
+¤
+java:S1104"\Make addMaterialField a static final constant or non-public and provide accessors if needed.(õ¸ˆ·ıÿÿÿÿ8‹µöĞò1J$66e726e9-fd68-4b72-b877-770bc2b712a4
+¢
+java:S1104 "ZMake addLengthField a static final constant or non-public and provide accessors if needed.(ÌÂœäıÿÿÿÿ8ŒµöĞò1J$46585a99-0921-4846-a495-fc4719b34c58
+¤
+java:S1104!"\Make addSupplierField a static final constant or non-public and provide accessors if needed.(¬Ôşÿÿÿÿ8ŒµöĞò1J$2605d898-5a69-43c7-a893-8207643beaf6
+¦
+java:S1104""^Make addStockPriceField a static final constant or non-public and provide accessors if needed.(ÈšÀ…ÿÿÿÿÿ8ŒµöĞò1J$3ab71ed6-f937-4961-ba91-315abeb781e4
+ 
+java:S1104#"]Make addSellPriceField a static final constant or non-public and provide accessors if needed.(÷ù¼ë8ŒµöĞò1J$a3cc8e32-ebe0-44a6-9f03-5d11c4a31abc
+¥
+java:S1104$"]Make searchStockButton a static final constant or non-public and provide accessors if needed.(°¹±Ùøÿÿÿÿ8ŒµöĞò1J$d0db4bcc-7922-462c-b614-3df36c7a8968
+œ
+java:S1104%"YMake openAdminPage a static final constant or non-public and provide accessors if needed.(¡ğù÷8ŒµöĞò1J$bc768d7f-71b1-49a2-85ee-2e08caaaaf46
+”	java:S101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(ƒû²—úÿÿÿÿ8µöĞò1J$697bbb7e-532c-4a81-a9b5-8c03c915e7b3
+•	java:S116("SRename this field "IdColumn" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÍÍ’Ô8ÑµöĞò1J$b12d7ea8-340c-4cbc-bc53-24b3860c21ae
+ 	java:S116@"YRename this field "QuantityColumn" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¾”´—üÿÿÿÿ8ÑµöĞò1J$7851196c-ab06-4ee2-9e78-4a043755bf34
+œ	java:S116I"URename this field "StockTable" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¸üñ²ıÿÿÿÿ8ÑµöĞò1J$7b766deb-7354-4468-ad51-82099ebf6814
+Å
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ş°Ñ×8ÓµöĞò1J$8b258012-1324-424e-b37b-fe242e6e71f5
+Ê
+java:S1186¡"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¶Ôø­ùÿÿÿÿ8ÓµöĞò1J$775d3718-0bd2-40db-b523-e217fc6616a4
+Å
+java:S1186¤"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ºØìˆ8ÓµöĞò1J$3434c864-3459-4820-82a9-a4781f9b11f1
+Å
+java:S1186§"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ê¦‚æ8ÔµöĞò1J$528d2846-43af-492f-9aed-aa7a1cd52e62
+Ê
+java:S1186ª"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(èÓ›–ûÿÿÿÿ8ÔµöĞò1J$67b0d604-1879-4251-be52-07731ff1c73a
+¤
+java:S1845¡"[Rename method "deleteStock" to prevent any misunderstanding/clash with field "deleteStock".(¶Ôø­ùÿÿÿÿ8áµöĞò1J$f4bebd31-42d9-4948-b52d-f6a6b493175b
+£
+java:S1845§"_Rename method "openAdminPage" to prevent any misunderstanding/clash with field "openAdminPage".(Ê¦‚æ8âµöĞò1J$29a6da67-1658-41a4-ba31-6beb94014edd
+s
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8Ÿ¶öĞò1J$92969679-478c-4362-8cb9-cde3bd0db68b

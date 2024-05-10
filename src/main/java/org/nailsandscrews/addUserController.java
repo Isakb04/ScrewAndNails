@@ -49,9 +49,6 @@ public class addUserController {
     private Button deleteUser;
 
     @FXML
-    private Button updateUser;
-
-    @FXML
     private Button openAdminPage;
 
     @FXML
@@ -84,11 +81,6 @@ public class addUserController {
 
     @FXML
     private void deleteUser() {
-
-    }
-
-    @FXML
-    private void updateUser() {
 
     }
 
@@ -142,7 +134,7 @@ public class addUserController {
         });
 
 
-        // search button to search the tableview by either username or type or both and display only the result in the tableview and searchAllUsers button to display all users
+        // search button to highlight the user in the tableview that matches the username and type fields
 
 
 
@@ -191,9 +183,4 @@ public class addUserController {
     public void deleteUser(ActionEvent event) {
 
     }
-
-    public void updateUser(ActionEvent event) {
-
-    }
-
 }

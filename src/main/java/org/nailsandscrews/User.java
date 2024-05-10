@@ -11,8 +11,6 @@ public class User {
     private String type;
     private String create_time;
 
-
-
     @Id
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

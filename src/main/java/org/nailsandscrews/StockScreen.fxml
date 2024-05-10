@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.chart.AreaChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.image.Image?>
@@ -19,8 +25,7 @@
          <HBox prefHeight="63.0" prefWidth="1025.0" translateX="5.0">
       <children>
          <HBox prefHeight="100.0" prefWidth="200.0" />
-      
-                                                    <Rectangle arcHeight="25" arcWidth="25" fill="#3c4036" height="97" scaleX="1.5" width="863.0" />
+          <Rectangle arcHeight="25" arcWidth="25" fill="#3c4036" height="97" scaleX="1.5" width="863.0" />
       </children>
    </HBox>
    <AnchorPane prefHeight="200.0" prefWidth="200.0" />
@@ -48,27 +53,68 @@
    </HBox>
 
           <VBox>
-      <HBox prefHeight="889.0" prefWidth="2301.0" translateX="75.0" translateY="10.0">
+      <HBox prefHeight="561.0" prefWidth="839.0" translateX="75.0" translateY="10.0">
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0" translateX="-246.0" />
              <VBox prefHeight="561.0" prefWidth="273.0" translateX="-487.0">
-               <AnchorPane prefHeight="327.0" prefWidth="389.0">
+               <AnchorPane prefHeight="561.0" prefWidth="1433.0">
                   <children>
                        <Rectangle arcHeight="25" arcWidth="25" fill="#E7EAF8" height="537.0" layoutX="307.0" layoutY="24.0" width="279" />
-                       <Label fx:id="type" layoutX="307.0" layoutY="373.0" prefHeight="20.0" prefWidth="284.0" text="Type: no Product selected" />
-                       <Label fx:id="productType" layoutX="307.0" layoutY="293.0" prefHeight="20.0" prefWidth="284.0" text="Product type: no Product selected" />
-                       <Label fx:id="material" layoutX="307.0" layoutY="433.0" prefHeight="20.0" prefWidth="284.0" text="Material: no Product selected" />
-                       <Label fx:id="length" layoutX="307.0" layoutY="413.0" prefHeight="20.0" prefWidth="284.0" text="Length: no Product selected" />
-                       <Label fx:id="quantity" layoutX="307.0" layoutY="313.0" prefHeight="20.0" prefWidth="284.0" text="Quantity: no Product selected" />
-                       <Label fx:id="buyingPrice" layoutX="307.0" layoutY="353.0" prefHeight="20.0" prefWidth="284.0" text="StockPrice: no Product selected" />
-                       <Label fx:id="supplier" layoutX="307.0" layoutY="333.0" prefHeight="20.0" prefWidth="284.0" text="supplier: no Product selected" />
-                       <Label fx:id="sellingPrice" layoutX="307.0" layoutY="393.0" prefHeight="20.0" prefWidth="284.0" text="Price: no Product selected" />
-                      <TreeView fx:id="treeView" layoutX="707.0" layoutY="67.0" onContextMenuRequested="#selectItem" onMouseClicked="#selectItem" prefHeight="493.0" prefWidth="284.0" />
-                      <ImageView fx:id="imageView" fitHeight="146.0" fitWidth="299.0" layoutX="317.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
+                       <Label fx:id="type" layoutX="307.0" layoutY="306.0" prefHeight="20.0" prefWidth="284.0" text="Type: no Product selected" />
+                       <Label fx:id="productType" layoutX="307.0" layoutY="328.0" prefHeight="20.0" prefWidth="284.0" text="Product type: no Product selected" />
+                       <Label fx:id="material" layoutX="307.0" layoutY="349.0" prefHeight="20.0" prefWidth="284.0" text="Material: no Product selected" />
+                       <Label fx:id="length" layoutX="307.0" layoutY="369.0" prefHeight="20.0" prefWidth="284.0" text="Length: no Product selected" />
+                       <Label fx:id="buyingPrice" layoutX="307.0" layoutY="429.0" prefHeight="20.0" prefWidth="284.0" text="StockPrice: no Product selected" />
+                       <Label fx:id="supplier" layoutX="307.0" layoutY="409.0" prefHeight="20.0" prefWidth="284.0" text="Supplier: no Product selected" />
+                       <Label fx:id="sellingPrice" layoutX="307.0" layoutY="449.0" prefHeight="20.0" prefWidth="284.0" text="Price: no Product selected" />
+                      <TreeView fx:id="treeView" layoutX="644.0" layoutY="68.0" onContextMenuRequested="#selectItem" onMouseClicked="#selectItem" prefHeight="493.0" prefWidth="284.0" />
+                      <TextField fx:id="searchField" layoutX="646.0" layoutY="24.0" prefHeight="30.0" prefWidth="279.0" />
+                     <Button fx:id="sellOrBuyStockButton" layoutX="339.0" layoutY="490.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="220.0" text="Sell or buy Stock" />
+                     <AnchorPane fx:id="rightScreen" layoutX="571.0" layoutY="8.0" prefHeight="546.0" prefWidth="507.0" translateX="400.0">
+                        <children>
+                           <ProgressBar fx:id="quantityBar1" layoutX="200.0" layoutY="284.0" prefHeight="20.0" prefWidth="102.0" progress="0.0" />
+                           <Separator layoutX="251.0" layoutY="39.0" orientation="VERTICAL" prefHeight="225.0" prefWidth="3.0" />
+                           <Separator layoutY="-1.0" prefHeight="1.0" prefWidth="517.0" />
+                           <Label layoutX="114.0" layoutY="4.0" scaleX="2.0" scaleY="2.0" scaleZ="2.0" text="Sell" underline="true" />
+                           <Label layoutX="367.0" layoutY="4.0" scaleX="2.0" scaleY="2.0" scaleZ="2.0" text="Buy" underline="true" />
+                           <AreaChart fx:id="sellData" layoutX="-9.0" layoutY="34.0" prefHeight="205.0" prefWidth="260.0">
+                             <xAxis>
+                               <CategoryAxis side="BOTTOM" />
+                             </xAxis>
+                             <yAxis>
+                               <NumberAxis side="LEFT" />
+                             </yAxis>
+                              <rotationAxis>
+                                 <Point3D />
+                              </rotationAxis>
+                           </AreaChart>
+                           <AreaChart fx:id="buyData" layoutX="251.0" layoutY="34.0" prefHeight="205.0" prefWidth="260.0">
+                              <xAxis>
+                                 <CategoryAxis side="BOTTOM" />
+                              </xAxis>
+                              <yAxis>
+                                 <NumberAxis side="LEFT" />
+                              </yAxis>
+                           </AreaChart>
+                           <Label fx:id="quantity1" layoutX="200.0" layoutY="284.0" prefHeight="20.0" prefWidth="102.0" text="Quantity: " />
+                           <Separator layoutX="251.0" layoutY="302.0" orientation="VERTICAL" prefHeight="246.0" prefWidth="9.0" />
+                           <Label layoutX="342.0" layoutY="219.0" text="Buy more stock" underline="true" />
+                           <Label layoutX="92.0" layoutY="219.0" text="Sell stock" underline="true" />
+                           <Label layoutX="199.0" layoutY="24.0" text="Change in price" underline="true" />
+                           <TextField fx:id="buyStockAmount" layoutX="291.0" layoutY="400.0" />
+                           <TextField fx:id="sellStockAmount" layoutX="37.0" layoutY="400.0" />
+                           <Label layoutX="99.0" layoutY="380.0" text="Amount" />
+                           <Label layoutX="353.0" layoutY="380.0" text="Amount" />
+                           <Button fx:id="sellStockAmountButton" layoutX="101.0" layoutY="451.0" mnemonicParsing="false" text="Sell" />
+                           <Button fx:id="buyStockAmountButton" layoutX="354.0" layoutY="451.0" mnemonicParsing="false" text="Buy" />
+                           <Label fx:id="productType" layoutX="132.0" layoutY="264.0" prefHeight="20.0" prefWidth="246.0" text="Product type: " />
+                        </children>
+                     </AnchorPane>
+                     <ProgressBar fx:id="quantityBar" layoutX="416.0" layoutY="389.0" prefHeight="20.0" prefWidth="66.0" progress="0.0" />
+                       <Label fx:id="quantity" layoutX="307.0" layoutY="389.0" prefHeight="20.0" prefWidth="209.0" text="Quantity: no Product selected" />
+                      <ImageView fx:id="stockProductImage" fitHeight="146.0" fitWidth="299.0" layoutX="317.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
                            <Image url="@../resources/images/unknown-image.jpg" />
                        </ImageView>
-                      <TextField fx:id="searchField" layoutX="712.0" layoutY="22.0" prefHeight="30.0" prefWidth="279.0" />
-                       <Button fx:id="addStockButton" layoutX="377.0" layoutY="511.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" text="Add Stock" />
                   </children>
                </AnchorPane>
              </VBox>

@@ -1,0 +1,25 @@
+
+ˆ	java:S101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(×ä´÷J$09ddaa73-72c8-484a-bb66-0d7a00ad17b7
+~
+java:S2094"BRemove this empty class, write its code or make it an "interface".(×ä´÷J$69e6591e-eeb1-4c76-b497-09bfda71dc32
+n
+java:S1128"-Remove this unused import 'javafx.fxml.FXML'.(ÃÚ¢„şÿÿÿÿJ$c9241fc6-8a5c-40b6-b0e2-62ad16826415
+t
+java:S1128"3Remove this unused import 'javafx.fxml.FXMLLoader'.(À‡ô³úÿÿÿÿJ$a8881a5a-5052-4244-b435-14ce99f6a03d
+j
+java:S1128".Remove this unused import 'javafx.scene.Node'.(ÑÖ¬ïJ$1b1382c1-e730-460c-86a3-5fe9e927586a
+l
+java:S1128"0Remove this unused import 'javafx.scene.Parent'.(²ä¡ÈJ$701bd409-3092-48e5-97e2-1db73c7d623c
+k
+java:S1128"/Remove this unused import 'javafx.scene.Scene'.(Õü²J$52f2fc55-1b17-4dc5-871b-1cdf2385ec0a
+y
+java:S1128"8Remove this unused import 'javafx.scene.control.Button'.(Ë Í‹øÿÿÿÿJ$6c87d7c3-dd58-410f-b1d4-7d48b5237ab1
+{
+java:S1128	"?Remove this unused import 'javafx.scene.control.PasswordField'.(êú´ËJ$15958437-99a3-440f-83ce-0cecb59845d8
+w
+java:S1128
+";Remove this unused import 'javafx.scene.control.TextField'.(¨¢¤¶J$0d6b6b5b-9f7c-4e45-9ad9-6b4bf5a6ba0b
+p
+java:S1128"/Remove this unused import 'javafx.stage.Stage'.(æÄ¸²úÿÿÿÿJ$744ca68e-5cb8-4ac5-bb1e-e8b3047af947
+q
+java:S1128"0Remove this unused import 'java.io.IOException'.(ªº»ÚıÿÿÿÿJ$78dca88a-0fe3-42c7-985e-eceacb7dcd4c
