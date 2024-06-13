@@ -1,32 +1,33 @@
 package org.nailsandscrews;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.AreaChart;
+import javafx.scene.chart.LineChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.Random;
+
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicReference;
 
-public class StockController implements Initializable {
+public class StockController<stock> implements Initializable {
 
-    public AreaChart sellData;
-
-    public AreaChart buyData;
+    public LineChart changeInPrice;
     public ImageView stockProductImage;
     public TextField buyStockAmount;
     public TextField sellStockAmount;
@@ -38,7 +39,7 @@ public class StockController implements Initializable {
     private ProgressBar quantityBar;
 
     @FXML
-    private TreeView treeView;
+    private TreeView<String> treeView;
 
     @FXML
     private TextField searchField;
@@ -47,10 +48,16 @@ public class StockController implements Initializable {
     public MenuItem logoutButton;
 
     @FXML
-    private MenuItem infoButton;
+    private Button contactAdmin;
 
     @FXML
     private Button sellOrBuyStockButton;
+
+    @FXML
+    private Button PrintSpec;
+
+    @FXML
+    private Button printAll;
 
     @FXML
     private ImageView imageView;
@@ -79,9 +86,27 @@ public class StockController implements Initializable {
     @FXML
     private Label supplier;
 
+    @FXML
+    private Text userIdInfoPage;
+
+    @FXML
+    private Text userNameInfoPage;
+
+    @FXML
+    private Text typeInfoPage;
+
+    @FXML
+    private Text systemInfoPage;
+
+    private User user;
+
+    private Map<String, Stock> stockMap = new HashMap<>();
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         quantityBar.setVisible(false);
+        sellOrBuyStockButton.setVisible(false);
 
 
         TreeItem<String> rootItem = new TreeItem<>("Stock");
@@ -90,9 +115,14 @@ public class StockController implements Initializable {
 
         DatabaseConnection.openDBSession();
         DatabaseConnection.databaseSession.beginTransaction();
-        List<Stock> stocks = DatabaseConnection.databaseSession.createQuery("from Stock").getResultList();
+        AtomicReference<List<Stock>> stocks = new AtomicReference<>(DatabaseConnection.databaseSession.createQuery("from Stock").getResultList());
         DatabaseConnection.databaseSession.getTransaction().commit();
         DatabaseConnection.closeDBSession();
+
+        for (Stock stock : stocks.get()) {
+            String uniqueKey = stock.getType() + stock.getProduct_type() + stock.getMaterial() + stock.getLength();
+            stockMap.put(uniqueKey, stock);
+        }
 
         // Create a Map to store the TreeItems for each type
         Map<String, TreeItem<String>> typeItems = new HashMap<>();
@@ -106,7 +136,7 @@ public class StockController implements Initializable {
         // Create a Map to store the TreeItems for each length
         Map<String, TreeItem<String>> lengthItems = new HashMap<>();
 
-        for (Stock stock : stocks) {
+        for (Stock stock : stocks.get()) {
             // Get or create the TreeItem for the type
             TreeItem<String> typeItem = typeItems.computeIfAbsent(stock.getType(), k -> {
                 ImageView typeIcon = getImage(stock.getType());
@@ -153,44 +183,170 @@ public class StockController implements Initializable {
             }
         });
 
-        //only take ints as input and when buyStockAmountButton is pressed add the amount to the quality in the stock database of the selected stock item
+
         buyStockAmount.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {
-                buyStockAmount.setText(newValue.replaceAll("[^\\d]", ""));
+                buyStockAmount.setText(newValue.replaceAll("\\D", ""));
             }
         });
 
+        sellStockAmount.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                sellStockAmount.setText(newValue.replaceAll("\\D", ""));
+            }
+        });
+
+        treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            selectItem();
+        });
+
+        // add the amount from buyStockAmount to the quantity in the stock database of the selected stock item from treeview
+        buyStockAmountButton.setOnAction(e -> {
+            TreeItem<String> item = treeView.getSelectionModel().getSelectedItem();
+            if (item != null) {
+                String selectedItemValue = getSelectedItemValue(item);
+                Stock stockItem = stockMap.get(selectedItemValue);
+                if (stockItem != null) {
+                    int amount = Integer.parseInt(buyStockAmount.getText());
+                    stockItem.setQuantity(stockItem.getQuantity() + amount);
+                    quantity.setText("Quantity: " + stockItem.getQuantity());
+                    quantityBar.setProgress((double) stockItem.getQuantity() / 500);
+                    quantityBar.setStyle(stockItem.getQuantity() < 165 ? "-fx-accent: red;" : stockItem.getQuantity() < 330 ? "-fx-accent: yellow;" : "-fx-accent: green;");
+                    buyStockAmount.clear();
+
+                    // Update the stock in the database
+                    DatabaseConnection.openDBSession();
+                    DatabaseConnection.databaseSession.beginTransaction();
+                    DatabaseConnection.databaseSession.update(stockItem);
+                    DatabaseConnection.databaseSession.getTransaction().commit();
+                    DatabaseConnection.closeDBSession();
+                }
+            }
+        });
+
+
+        // subtract the amount from sellStockAmount to the quantity in the stock database of the selected stock item from treeview
+        sellStockAmountButton.setOnAction(e -> {
+            TreeItem<String> item = treeView.getSelectionModel().getSelectedItem();
+            if (item != null) {
+                String selectedItemValue = getSelectedItemValue(item);
+                Stock stockItem = stockMap.get(selectedItemValue);
+                if (stockItem != null) {
+                    int amount = Integer.parseInt(sellStockAmount.getText());
+                    stockItem.setQuantity(stockItem.getQuantity() - amount);
+                    quantity.setText("Quantity: " + stockItem.getQuantity());
+                    quantityBar.setProgress((double) stockItem.getQuantity() / 500);
+                    quantityBar.setStyle(stockItem.getQuantity() < 165 ? "-fx-accent: red;" : stockItem.getQuantity() < 330 ? "-fx-accent: yellow;" : "-fx-accent: green;");
+                    sellStockAmount.clear();
+
+                    // Update the stock in the database
+                    DatabaseConnection.openDBSession();
+                    DatabaseConnection.databaseSession.beginTransaction();
+                    DatabaseConnection.databaseSession.update(stockItem);
+                    DatabaseConnection.databaseSession.getTransaction().commit();
+                    DatabaseConnection.closeDBSession();
+                }
+            }
+        });
+
+        // logout button
         logoutButton.setOnAction(e -> {
-            Parent root = null;
             try {
-                root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+                stage.setTitle("Login");
+                stage.setScene(scene);
+                stage.centerOnScreen();
+                stage.show();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
+            }});
+
+        // contact admin button
+        contactAdmin.setOnAction(e -> {
+            try {
+                SceneController sceneController = new SceneController();
+                sceneController.contactAdmin(e);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
             }
-            Stage stage = (Stage) treeView.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Login");
-            stage.centerOnScreen();
-            stage.setResizable(false);
-            stage.show();
         });
 
-        infoButton.setOnAction(e -> {
-            System.out.println("Info button clicked");
+      //  private void darkMode() {
+        // Set the CSS style for the dark mode
+       // String darkModeCss = getClass().getResource("/org/resources/css/dark-mode.css").toExternalForm();
+       // }
+
+        // print specific information selected in the tree view to a TXT file when PrintSpec button is pressed
+        PrintSpec.setOnAction(e ->
+        {
+            try {
+                FileWriter writer = new FileWriter("SpecificStock output.txt", false); // Overwrite the file
+                BufferedWriter buffer = new BufferedWriter(writer);
+
+                TreeItem<String> item = treeView.getSelectionModel().getSelectedItem();
+                if (item != null) {
+                    String selectedItemValue = getSelectedItemValue(item);
+                    Stock stock = stockMap.get(selectedItemValue);
+                    if (stock != null) {
+                        buffer.write("Stock type: " + stock.getType() + "\n");
+                        buffer.write("Product type: " + stock.getProduct_type() + "\n");
+                        buffer.write("Material: " + stock.getMaterial() + "\n");
+                        buffer.write("Length: " + stock.getLength() + "\n");
+                        buffer.write("Quantity: " + stock.getQuantity() + "\n");
+                        buffer.write("Buying price: " + stock.getBuying_price() + "\n");
+                        buffer.write("Selling price: " + stock.getSelling_price() + "\n");
+                        buffer.write("Supplier: " + stock.getSupplier() + "\n");
+                    }
+                }
+
+                buffer.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        // print all information in the tree view to a TXT file when printAll button is pressed
+        printAll.setOnAction(e ->
+
+        {
+            try {
+                FileWriter writer = new FileWriter("AllStock output.txt", false); // Overwrite the file
+                BufferedWriter buffer = new BufferedWriter(writer);
+
+                List<Stock> stockq = DatabaseConnection.getAllStocks();
+                for (Stock stock : stockq) {
+                    buffer.write("Stock type: " + stock.getType() + "\n");
+                    buffer.write("Product type: " + stock.getProduct_type() + "\n");
+                    buffer.write("Material: " + stock.getMaterial() + "\n");
+                    buffer.write("Length: " + stock.getLength() + "\n");
+                    buffer.write("Quantity: " + stock.getQuantity() + "\n");
+                    buffer.write("Buying price: " + stock.getBuying_price() + "\n");
+                    buffer.write("Selling price: " + stock.getSelling_price() + "\n");
+                    buffer.write("Supplier: " + stock.getSupplier() + "\n");
+                    buffer.write("\n"); // Add a blank line between stocks
+                }
+
+                buffer.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
 
         rightScreen.setVisible(false);
-        sellOrBuyStockButton.setOnAction(e -> {
+        sellOrBuyStockButton.setOnAction(e ->
+
+        {
             if (rightScreen.isVisible()) {
                 rightScreen.setVisible(false);
             } else {
                 rightScreen.setVisible(true);
             }
         });
-
     }
 
-
+    // check what the selected item is
     private ImageView getImage(String name) {
         String imagePath = "/org/resources/images/" + name.toLowerCase() + ".png";
         URL url = getClass().getResource(imagePath);
@@ -201,89 +357,131 @@ public class StockController implements Initializable {
         return new ImageView(new Image(imagePath));
     }
 
+    // check what the selected item is
     public void selectItem() {
-        TreeItem<String> item = (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
+        TreeItem<String> item = treeView.getSelectionModel().getSelectedItem();
         if (item != null) {
-            System.out.println(item.getValue());
+            // Collapse all items
+            collapseAll(treeView.getRoot());
+            // Expand the selected item and its parents
+            expandItemAndParents(item);
+            // Display information of the selected item
+            Stock stock = displayItemInfo(item);
+            // Check if the selected item is a full stock row
+            int level = treeView.getTreeItemLevel(item);
+            if (level == 4 && stock != null) {
+                System.out.println("Selected full stock row: " + stock);
+                System.out.println("Selected full stock row: " + stock.getId());
+            }
         }
-        infoOfItem(item);
-
     }
 
-    private void infoOfItem(TreeItem<String> item) {
-    // Get the selected item's value
-    String selectedItemValue = item.getValue();
+    // collapse all items in the tree
+    private void collapseAll(TreeItem<String> item) {
+        item.setExpanded(false);
+        for (TreeItem<String> child : item.getChildren()) {
+            collapseAll(child);
+        }
+    }
 
-    // Get all stocks from the database
-    List<Stock> stocks = DatabaseConnection.getAllStocks();
+    // only expand the selected item type list
+    private void expandItemAndParents(TreeItem<String> item) {
+        TreeItem<String> parent = item.getParent();
+        if (parent != null) {
+            // Collapse all siblings
+            for (TreeItem<String> sibling : parent.getChildren()) {
+                if (sibling != item) {
+                    collapseAll(sibling);
+                    rightScreen.setVisible(false);
+                    sellOrBuyStockButton.setVisible(false);
+                    refreshShowData();
 
-    // Find the stock that matches the selected item
-    for (Stock stock : stocks) {
-        // Check the level of the selected item in the TreeView
+                }
+            }
+            // Expand the selected item and its parent
+            parent.setExpanded(true);
+            item.setExpanded(true);
+            expandItemAndParents(parent);
+        }
+    }
+
+    // only expand the selected item type list
+    private String getSelectedItemValue(TreeItem<String> item) {
         int level = treeView.getTreeItemLevel(item);
+        return switch (level) {
+            case 1 -> item.getValue();
+            case 2 -> item.getParent().getValue() + item.getValue();
+            case 3 -> item.getParent().getParent().getValue() + item.getParent().getValue() + item.getValue();
+            case 4 ->
+                    item.getParent().getParent().getParent().getValue() + item.getParent().getParent().getValue() + item.getParent().getValue() + item.getValue();
+            default -> null;
+        };
+    }
 
-        switch (level) {
-            case 1: // Type level
-                if (stock.getType().equals(selectedItemValue)) {
-                    type.setText("Stock: " + stock.getType());
-                }
-                quantityBar.setVisible(false);
-                break;
-            case 2: // Product type level
-                if (stock.getProduct_type().equals(selectedItemValue)) {
+    // display the information of the selected item
+    public Stock displayItemInfo(TreeItem<String> item) {
+        String selectedItemValue = getSelectedItemValue(item);
+        Stock stock = stockMap.get(selectedItemValue);
+        if (stock != null) {
+            int level = treeView.getTreeItemLevel(item);
+            switch (level) {
+                case 1, 2, 3:
+                    break;
+                case 4:
+                    type.setText("Type: " + stock.getType());
                     productType.setText("Product Type: " + stock.getProduct_type());
-                }
-                quantityBar.setVisible(false);
-                break;
-            case 3: // Material level
-                if (stock.getMaterial().equals(selectedItemValue)) {
                     material.setText("Material: " + stock.getMaterial());
-                }
-                quantityBar.setVisible(false);
-                break;
-            case 4: // Length level
-                if (stock.getLength().equals(selectedItemValue)) {
                     length.setText("Length: " + stock.getLength());
                     quantity.setText("Quantity: " + stock.getQuantity());
-
                     quantityBar.setProgress((double) stock.getQuantity() / 500);
-                    if (stock.getQuantity() < 165) {
-                        quantityBar.setStyle("-fx-accent: red;");
-                    } else if (stock.getQuantity() < 330) {
-                        quantityBar.setStyle("-fx-accent: yellow;");
-                    } else {
-                        quantityBar.setStyle("-fx-accent: green;");
-                    }
-
+                    quantityBar.setStyle(stock.getQuantity() < 165 ? "-fx-accent: red;" : stock.getQuantity() < 330 ? "-fx-accent: yellow;" : "-fx-accent: green;");
                     buyingPrice.setText("Buying Price: " + stock.getBuying_price());
                     sellingPrice.setText("Selling Price: " + stock.getSelling_price());
                     supplier.setText("Supplier: " + stock.getSupplier());
-
-                    // Make the quantityBar visible
                     quantityBar.setVisible(true);
-                }
-                break;
-            default:
-                // Make the quantityBar invisible when a non-length item is selected
-                quantityBar.setVisible(false);
-                break;
-        }
+                    sellOrBuyStockButton.setVisible(true);
+                    rightScreen.setVisible(true);
+                    showData();
+                    break;
+                default:
+                    quantityBar.setVisible(false);
+                    sellOrBuyStockButton.setVisible(false);
+                    break;
+            }
+            loadImage(stock);
 
-        // Print debug information
-        System.out.println("Selected item: " + selectedItemValue);
-        System.out.println("Matching stock found: " + stock.getType());
-        System.out.println("Labels updated");
+            // Print the full product details to the terminal
+            System.out.println("Stock ID: " + stock.getId());
+            System.out.println("Stock Type: " + stock.getType());
+            System.out.println("Product Type: " + stock.getProduct_type());
+            System.out.println("Material: " + stock.getMaterial());
+            System.out.println("Length: " + stock.getLength());
+            System.out.println("Quantity: " + stock.getQuantity());
+            System.out.println("Buying Price: " + stock.getBuying_price());
+            System.out.println("Selling Price: " + stock.getSelling_price());
+            System.out.println("Supplier: " + stock.getSupplier());
 
-        // Stop the loop once the matching stock is found
-        if (stock.getType().equals(selectedItemValue) ||
-                stock.getProduct_type().equals(selectedItemValue) ||
-                stock.getMaterial().equals(selectedItemValue) ||
-                stock.getLength().equals(selectedItemValue)) {
-            break;
         }
+        return stock;
     }
-}
 
+    // load the image of the selected stock item
+    private void loadImage(Stock stock) {
+        String imagePath = "/org/resources/images/" + stock.getType().toLowerCase() + " box " + stock.getLength().toLowerCase() + ".jpeg";
+        URL url = getClass().getResource(imagePath);
+        if (url == null) {
+            imagePath = "/org/resources/images/unknown-image.jpg";
+            url = getClass().getResource(imagePath);
+            if (url == null) {
+                System.err.println("Default image file not found");
+                return;
+            }
+        }
+        Image image = new Image(imagePath);
+        stockProductImage.setImage(image);
+    }
+
+    // filter the tree view based on the search field
     private void filterTree(String filter) {
         // Get the root item
         TreeItem<String> root = treeView.getRoot();
@@ -298,6 +496,8 @@ public class StockController implements Initializable {
         }
     }
 
+
+    // filter the tree view based on the search field
     private void filter(TreeItem<String> item, String filter) {
         if (item.getValue().toLowerCase().contains(filter.toLowerCase())) {
             // If the item matches the filter, make sure it is visible and selected
@@ -313,6 +513,7 @@ public class StockController implements Initializable {
         }
     }
 
+    // collapse all product types
     private void collapseProductTypes(TreeItem<String> item) {
         for (TreeItem<String> child : item.getChildren()) {
             child.setExpanded(false);
@@ -326,33 +527,28 @@ public class StockController implements Initializable {
         System.out.println("Search stock");
     }
 
-    //set test data into buyData and sellData
-    public void setTestData() {
-        //set test data into buyData
-        sellData.getData().add(new AreaChart.Series("Sell", FXCollections.observableArrayList(
-                new AreaChart.Data(1, 10),
-                new AreaChart.Data(2, 20),
-                new AreaChart.Data(3, 30),
-                new AreaChart.Data(4, 40),
-                new AreaChart.Data(5, 50),
-                new AreaChart.Data(6, 60),
-                new AreaChart.Data(7, 70),
-                new AreaChart.Data(8, 80),
-                new AreaChart.Data(9, 90),
-                new AreaChart.Data(10, 100)
-        )));
-        //set test data into sellData
-        buyData.getData().add(new AreaChart.Series("Buy", FXCollections.observableArrayList(
-                new AreaChart.Data(1, 100),
-                new AreaChart.Data(2, 90),
-                new AreaChart.Data(3, 80),
-                new AreaChart.Data(4, 70),
-                new AreaChart.Data(5, 60),
-                new AreaChart.Data(6, 50),
-                new AreaChart.Data(7, 40),
-                new AreaChart.Data(8, 30),
-                new AreaChart.Data(9, 20),
-                new AreaChart.Data(10, 10)
-        )));
+    private void showData() {
+        // Create a series for the change in price
+        AreaChart.Series<String, Number> changeInPriceSeries = new AreaChart.Series<>();
+        changeInPriceSeries.setName("Change in Price");
+
+        // Create a Random object
+        Random random = new Random();
+
+        // Add data to the series
+        String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+        for (String month : months) {
+            int stockPrice = 100 + random.nextInt(600); // Generate a random stock price between 100 and 700
+            changeInPriceSeries.getData().add(new AreaChart.Data<>(month, stockPrice));
+        }
+        // Add the series to the chart
+        changeInPrice.getData().add(changeInPriceSeries);
+
+        changeInPrice.setCreateSymbols(false);
+    }
+
+    public void refreshShowData() {
+        changeInPrice.getData().clear();
+        showData();
     }
 }

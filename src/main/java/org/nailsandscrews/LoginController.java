@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -27,8 +28,11 @@ public class LoginController {
     @FXML
     private Button loginButton;
 
+    Alert error = new Alert(Alert.AlertType.ERROR);
 
     public void initialize() {
+        // prepare the database connection for quicker login
+        DatabaseConnection.openDBSession();
         usernameField.setOnAction(e -> passwordField.requestFocus());
         passwordField.setOnAction(e -> loginButton.fire());
         loginButton.setOnAction(e -> {
@@ -42,38 +46,29 @@ public class LoginController {
                 Parent root = null;
                 try {
                     if (userType.equals("Admin")) {
-                        root = FXMLLoader.load(getClass().getResource("AdminScreen.fxml"));
+                        SceneController sceneController = new SceneController();
+                        sceneController.AdminScreen(e);
                     } else {
-                        root = FXMLLoader.load(getClass().getResource("StockScreen.fxml"));
+                        SceneController sceneController = new SceneController();
+                        sceneController.StockScreen(e);
                     }
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-                Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-                stage.setScene(new Scene(root));
-                stage.setTitle(userType + " Screen");
-                stage.centerOnScreen();
-                stage.setResizable(false);
-                stage.show();
             } else {
-                // Show error message (e.g., invalid credentials)
-                System.out.println("Invalid username or password!");
+                // set wrong username or password alert
+                error.setContentText("Invalid username or password!\nPlease try again or contact an Administrator.");                // show the dialog
+                error.show();
             }
         });
 
         contactAdminButton.setOnAction(e -> {
-            Parent root = null;
             try {
-                root = FXMLLoader.load(getClass().getResource("contactAdmin.fxml"));
-            } catch (IOException ex) {
+                SceneController sceneController = new SceneController();
+                sceneController.contactAdmin(e);
+            } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
-            Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Admin Contact");
-            stage.centerOnScreen();
-            stage.setResizable(false);
-            stage.show();
         });
     }
 }

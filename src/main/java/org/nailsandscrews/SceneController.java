@@ -1,6 +1,7 @@
 package org.nailsandscrews;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -10,56 +11,78 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class SceneController {
+    private static SceneController instance;
+    private String previousSceneName; // Field to keep track of the previous scene name
+    private String previousFunctionName; // New field to keep track of the previous function name
 
-  private Stage stage;
-  private Scene scene;
-  private Parent root;
-
-  public void switchToScene1(ActionEvent event) throws IOException {
-   root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-   stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-   scene = new Scene(root);
-   stage.setScene(scene);
-   stage.show();
-  }
-
-  public void switchToScene2(ActionEvent event) throws IOException {
-   Parent root = FXMLLoader.load(getClass().getResource("StockScreen.fxml"));
-   stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-   scene = new Scene(root);
-   stage.setScene(scene);
-   stage.show();
-  }
-
-  public void switchToScene3(ActionEvent event) throws IOException {
-   Parent root = FXMLLoader.load(getClass().getResource("contactAdmin.fxml"));
-   stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-   scene = new Scene(root);
-   stage.setScene(scene);
-   stage.show();
-  }
-
-  public void switchToScene4(ActionEvent event) throws IOException {
-   Parent root = FXMLLoader.load(getClass().getResource("addUser.fxml"));
-   stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-   scene = new Scene(root);
-   stage.setScene(scene);
-   stage.show();
-  }
-
-    public void switchToScene5(ActionEvent event) throws IOException {
-     Parent root = FXMLLoader.load(getClass().getResource("addStock.fxml"));
-     stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-     scene = new Scene(root);
-     stage.setScene(scene);
-     stage.show();
+    public SceneController() {
+        instance = this;
     }
 
-    public void switchToScene6(ActionEvent event) throws IOException {
-     Parent root = FXMLLoader.load(getClass().getResource("adminStockScreen.fxml"));
-     stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-     scene = new Scene(root);
-     stage.setScene(scene);
-     stage.show();
+    public static SceneController getInstance() {
+        if (instance == null) {
+            instance = new SceneController();
+        }
+        return instance;
+    }
+
+    private void switchScene(ActionEvent event, String fxmlFile, String title, String functionName) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        // Set previousScene, previousSceneName, and previousFunctionName to the current scene, its name, and function name before switching
+        if (stage.getScene() != null) {
+            // Field to keep track of the previous scene
+            Scene previousScene = stage.getScene();
+            previousSceneName = stage.getTitle();
+            previousFunctionName = functionName;
+        }
+
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlFile)));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        System.out.println("saved scene name: " + previousSceneName);
+        if (title != null) {
+            stage.setTitle(title);
+        }
+        stage.centerOnScreen();
+        stage.toFront();
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    public String thisFunctionName() {
+        return previousFunctionName;
+    }
+
+    public String previousSceneName() {
+        return previousSceneName;
+    }
+
+    public void LoginScreen(ActionEvent event) throws IOException {
+        switchScene(event, "Login.fxml", null, "Login Screen");
+    }
+
+    public void AdminScreen(ActionEvent event) throws IOException {
+        switchScene(event, "AdminScreen.fxml", "Admin Screen", "Admin Screen");
+    }
+
+    public void StockScreen(ActionEvent event) throws IOException {
+        switchScene(event, "stockScreen.fxml", "Stock Screen", "Stock Screen");
+    }
+
+    public void contactAdmin(ActionEvent event) throws IOException {
+        switchScene(event, "contactAdmin.fxml", "Contact Admin", "contact Admin");
+    }
+
+    public void addUser(ActionEvent event) throws IOException {
+        switchScene(event, "addUser.fxml", "Add User", "add User");
+    }
+
+    public void addStock(ActionEvent event) throws IOException {
+        switchScene(event, "addStock.fxml", "Add Stock", "add Stock");
+    }
+
+    public void adminStockScreen(ActionEvent event) throws IOException {
+        switchScene(event, "adminStockScreen.fxml", "Admin Stock Screen", "admin Stock Screen");
     }
 }

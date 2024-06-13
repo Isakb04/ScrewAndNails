@@ -117,7 +117,6 @@ public class addUserController {
             user.setCreate_time(LocalDateTime.now().toString());
 
 
-
             DatabaseConnection.openDBSession();
             DatabaseConnection.databaseSession.beginTransaction();
             DatabaseConnection.databaseSession.save(user);
@@ -137,20 +136,13 @@ public class addUserController {
         // search button to highlight the user in the tableview that matches the username and type fields
 
 
-
-         openAdminPage.setOnAction(e -> {
-            Parent root = null;
+        openAdminPage.setOnAction(e -> {
             try {
-                root = FXMLLoader.load(getClass().getResource("adminScreen.fxml"));
-            } catch (IOException ex) {
+                SceneController sceneController = new SceneController();
+                sceneController.AdminScreen(e);
+            } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
-            Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Admin Screen");
-            stage.centerOnScreen();
-            stage.setResizable(false);
-            stage.show();
         });
 
         // delete the selected user from the tableview and the database

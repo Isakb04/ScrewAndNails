@@ -193,3 +193,7 @@ Q.idea/sonarlint/securityhotspotstore/e/d/ed12688499a0cdf244779e6d8231e921025f6c
 LICENSE,0\3\0398ccd0f49298b10a3d76a47800d2ebecd49859
 9
 	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+<
+build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
+g
+7src/main/java/org/resources/design/StockScreenStyle.css,0\b\0be2d55c9d2f3f9749dbd163407508ecb64e716f

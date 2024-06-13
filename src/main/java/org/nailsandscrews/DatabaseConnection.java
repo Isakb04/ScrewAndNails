@@ -67,4 +67,5 @@ public class DatabaseConnection {
     databaseSession.getTransaction().commit();
     closeDBSession();
     return resultList;
-    }}
+    }
+}

@@ -99,26 +99,26 @@ public class addStockController {
         addStock.setOnAction(e -> {
             DatabaseConnection.openDBSession();
             DatabaseConnection.databaseSession.beginTransaction();
-               Stock stock = new Stock();
-                stock.setType(addTypeField.getText());
-                stock.setProduct_type(addProductTypeField.getText());
-                stock.setMaterial(addMaterialField.getText());
-                stock.setLength(addLengthField.getText());
-                stock.setSupplier(addSupplierField.getText());
-                stock.setBuying_price(Float.parseFloat(addStockPriceField.getText()));
-                stock.setSelling_price(Float.parseFloat(addSellPriceField.getText()));
-                stock.setQuantity(0);
-                stock.setDate_added(LocalDateTime.now().toString());
-                stock.setLast_updated(LocalDateTime.now().toString());
-                addTypeField.clear();
-                addProductTypeField.clear();
-                addMaterialField.clear();
-                addLengthField.clear();
-                addSupplierField.clear();
-                addStockPriceField.clear();
-                addSellPriceField.clear();
-                StockTable.getItems().add(stock);
-                resultArea.setText("INSERT INTO Stock (type, product_type, material, length, supplier, buying_price, selling_price, quantity, date_added, last_updated) VALUES ('" + stock.getType() + "', '" + stock.getProduct_type() + "', '" + stock.getMaterial() + "', '" + stock.getLength() + "', '" + stock.getSupplier() + "', " + stock.getBuying_price() + ", " + stock.getSelling_price() + ", " + stock.getQuantity() + ", '" + stock.getDate_added() + "', '" + stock.getLast_updated() + "');");
+            Stock stock = new Stock();
+            stock.setType(addTypeField.getText());
+            stock.setProduct_type(addProductTypeField.getText());
+            stock.setMaterial(addMaterialField.getText());
+            stock.setLength(addLengthField.getText());
+            stock.setSupplier(addSupplierField.getText());
+            stock.setBuying_price(Float.parseFloat(addStockPriceField.getText()));
+            stock.setSelling_price(Float.parseFloat(addSellPriceField.getText()));
+            stock.setQuantity(0);
+            stock.setDate_added(LocalDateTime.now().toString());
+            stock.setLast_updated(LocalDateTime.now().toString());
+            addTypeField.clear();
+            addProductTypeField.clear();
+            addMaterialField.clear();
+            addLengthField.clear();
+            addSupplierField.clear();
+            addStockPriceField.clear();
+            addSellPriceField.clear();
+            StockTable.getItems().add(stock);
+            resultArea.setText("INSERT INTO Stock (type, product_type, material, length, supplier, buying_price, selling_price, quantity, date_added, last_updated) VALUES ('" + stock.getType() + "', '" + stock.getProduct_type() + "', '" + stock.getMaterial() + "', '" + stock.getLength() + "', '" + stock.getSupplier() + "', " + stock.getBuying_price() + ", " + stock.getSelling_price() + ", " + stock.getQuantity() + ", '" + stock.getDate_added() + "', '" + stock.getLast_updated() + "');");
 
             DatabaseConnection.databaseSession.save(stock);
             DatabaseConnection.databaseSession.getTransaction().commit();
@@ -128,18 +128,12 @@ public class addStockController {
         });
 
         openAdminPage.setOnAction(e -> {
-            Parent root = null;
             try {
-                root = FXMLLoader.load(getClass().getResource("adminScreen.fxml"));
-            } catch (IOException ex) {
+                SceneController sceneController = new SceneController();
+                sceneController.AdminScreen(e);
+            } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
-            Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Admin Screen");
-            stage.centerOnScreen();
-            stage.setResizable(false);
-            stage.show();
         });
 
         deleteStock.setOnAction(e ->
