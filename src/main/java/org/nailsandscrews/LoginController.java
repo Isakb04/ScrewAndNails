@@ -20,7 +20,7 @@ public class LoginController {
     public Button contactAdminButton;
 
     @FXML
-    private TextField usernameField;
+    TextField usernameField;
 
     @FXML
     private PasswordField passwordField;

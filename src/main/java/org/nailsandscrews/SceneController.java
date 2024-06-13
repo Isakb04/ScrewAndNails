@@ -81,8 +81,4 @@ public class SceneController {
     public void addStock(ActionEvent event) throws IOException {
         switchScene(event, "addStock.fxml", "Add Stock", "add Stock");
     }
-
-    public void adminStockScreen(ActionEvent event) throws IOException {
-        switchScene(event, "adminStockScreen.fxml", "Admin Stock Screen", "admin Stock Screen");
-    }
 }

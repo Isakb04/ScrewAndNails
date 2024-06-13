@@ -7,6 +7,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -35,7 +38,7 @@ public class contactAdminController {
 
     public void initialize() {
         messageBox.setEditable(false);
-        messageBox.setText("[Messages will appear here]");
+        messageBox.setText("[Messages]" + "\n\n");
 
         SceneController sceneController = SceneController.getInstance();
         String previousFunction = sceneController.thisFunctionName();
@@ -66,12 +69,13 @@ public class contactAdminController {
                 throw new RuntimeException(ex);
             }
         });
-
         sendMessage.setOnAction(e -> {
-            JOptionPane.showMessageDialog(null, "Message sent successfully");
-        });
-
-        sendMessage.setOnAction(e -> {
+            String userName = userNameField.getText();
+            String messageText = message.getText();
+            String currentMessages = messageBox.getText();
+            String newMessage = userName + ":" + messageText + "\n";
+            messageBox.setText(currentMessages + newMessage);
+            message.clear();
         });
 
         userNameField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -83,7 +87,7 @@ public class contactAdminController {
         });
 
         message.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.length() > 0) {
+            if (!newValue.isEmpty()) {
                 sendMessage.setDisable(false);
             } else {
                 sendMessage.setDisable(true);
