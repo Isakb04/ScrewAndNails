@@ -106,21 +106,5 @@ public class Stock {
     public void setLast_updated(String last_updated) {
         this.last_updated = last_updated;
     }
-
-
-        /* public Stock() {}
-
-    public Stock(int id, String product_type, String material , String length, int buying_price, int selling_price, int quantity, String supplier, String date_added, String last_updated) {
-        this.id = id;
-        this.product_type = product_type;
-        this.material = material;
-        this.length = length;
-        this.buying_price = buying_price;
-        this.selling_price = selling_price;
-        this.quantity = quantity;
-        this.supplier = supplier;
-        this.date_added = date_added;
-        this.last_updated = last_updated;
-    } */
 }
 

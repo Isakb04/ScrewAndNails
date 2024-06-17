@@ -1,10 +1,8 @@
 package org.nailsandscrews;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.LineChart;
@@ -13,7 +11,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 import java.util.Random;
 
@@ -36,78 +33,76 @@ public class StockController<stock> implements Initializable {
     public AnchorPane rightScreen;
 
     @FXML
-    private ProgressBar quantityBar;
+    ProgressBar quantityBar;
 
     @FXML
-    private TreeView<String> treeView;
+    TreeView<String> treeView;
 
     @FXML
-    private TextField searchField;
+    TextField searchField;
 
     @FXML
-    public MenuItem logoutButton;
+    Button logoutButton;
 
     @FXML
-    private Button contactAdmin;
+    Button contactAdmin;
 
     @FXML
-    private Button sellOrBuyStockButton;
+    Button sellOrBuyStockButton;
 
     @FXML
-    private Button PrintSpec;
+    Button PrintSpec;
 
     @FXML
-    private Button printAll;
+    Button printAll;
 
     @FXML
-    private ImageView imageView;
+    Button adminHub;
 
     @FXML
-    private Label type;
+    ImageView imageView;
 
     @FXML
-    private Label productType;
+    Label type;
 
     @FXML
-    private Label material;
+    Label productType;
 
     @FXML
-    private Label quantity;
+    Label material;
 
     @FXML
-    private Label length;
+    Label quantity;
 
     @FXML
-    private Label buyingPrice;
+    Label length;
 
     @FXML
-    private Label sellingPrice;
+    Label buyingPrice;
 
     @FXML
-    private Label supplier;
+    Label sellingPrice;
 
     @FXML
-    private Text userIdInfoPage;
+    Label supplier;
 
     @FXML
-    private Text userNameInfoPage;
+    Text userNameInfoPage;
 
     @FXML
-    private Text typeInfoPage;
+    Text typeInfoPage;
 
     @FXML
-    private Text systemInfoPage;
+    Text systemInfoPage;
 
-    private User user;
-
-    private Map<String, Stock> stockMap = new HashMap<>();
-
+    Map<String, Stock> stockMap = new HashMap<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         quantityBar.setVisible(false);
         sellOrBuyStockButton.setVisible(false);
-
+        adminHub.setVisible(false);
+        showUserInfo();
 
         TreeItem<String> rootItem = new TreeItem<>("Stock");
         treeView.setShowRoot(false);
@@ -252,16 +247,14 @@ public class StockController<stock> implements Initializable {
         // logout button
         logoutButton.setOnAction(e -> {
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-                Scene scene = new Scene(root);
-                Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-                stage.setTitle("Login");
-                stage.setScene(scene);
-                stage.centerOnScreen();
-                stage.show();
-            } catch (IOException ex) {
+                SceneController sceneController = new SceneController();
+                sceneController.LoginScreen(e);
+                LoginController.savedUsername = null;
+                LoginController.savedType = null;
+            } catch (Exception ex) {
                 throw new RuntimeException(ex);
-            }});
+            }
+        });
 
         // contact admin button
         contactAdmin.setOnAction(e -> {
@@ -273,11 +266,21 @@ public class StockController<stock> implements Initializable {
             }
         });
 
-      //  private void darkMode() {
-        // Set the CSS style for the dark mode
-       // String darkModeCss = getClass().getResource("/org/resources/css/dark-mode.css").toExternalForm();
-       // }
+        if (LoginController.savedType.equals("Admin")) {
+            adminHub.setVisible(true);
+        }
 
+        // admin hub button
+        adminHub.setOnAction(e -> {
+            try {
+                if (LoginController.savedType.equals("Admin")) {
+                    SceneController sceneController = new SceneController();
+                    sceneController.AdminScreen(e);
+                }
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         // print specific information selected in the tree view to a TXT file when PrintSpec button is pressed
         PrintSpec.setOnAction(e ->
         {
@@ -550,5 +553,13 @@ public class StockController<stock> implements Initializable {
     public void refreshShowData() {
         changeInPrice.getData().clear();
         showData();
+    }
+
+    public void showUserInfo() {
+        userNameInfoPage.setText("[UserName]: " + LoginController.savedUsername);
+        typeInfoPage.setText("[Type]: " + LoginController.savedType);
+        //get the system info
+        String systemInfo = System.getProperty("os.name") + " " + System.getProperty("os.version") + " " + System.getProperty("os.arch");
+        systemInfoPage.setText("[System Info]: " + systemInfo);
     }
 }

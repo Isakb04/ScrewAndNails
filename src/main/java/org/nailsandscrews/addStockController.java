@@ -37,40 +37,40 @@ public class addStockController {
     public Button openAdminPage;
 
     @FXML
-    private TableColumn<Stock, Integer> IdColumn;
+    TableColumn<Stock, Integer> IdColumn;
 
     @FXML
-    private TableColumn<Stock, String> typeColumn;
+    TableColumn<Stock, String> typeColumn;
 
     @FXML
-    private TableColumn<Stock, String> productTypeColumn;
+    TableColumn<Stock, String> productTypeColumn;
 
     @FXML
-    private TableColumn<Stock, String> materialColumn;
+    TableColumn<Stock, String> materialColumn;
 
     @FXML
-    private TableColumn<Stock, Integer> lengthColumn;
+    TableColumn<Stock, Integer> lengthColumn;
 
     @FXML
-    private TableColumn<Stock, String> supplierColumn;
+    TableColumn<Stock, String> supplierColumn;
 
     @FXML
-    private TableColumn<Stock, Double> buyingPriceColumn;
+    TableColumn<Stock, Double> buyingPriceColumn;
 
     @FXML
-    private TableColumn<Stock, Double> sellingPriceColumn;
+    TableColumn<Stock, Double> sellingPriceColumn;
 
     @FXML
-    private TableColumn<Stock, Integer> QuantityColumn;
+    TableColumn<Stock, Integer> QuantityColumn;
 
     @FXML
-    private TableColumn<Stock, String> dateAddedColumn;
+    TableColumn<Stock, String> dateAddedColumn;
 
     @FXML
-    private TableColumn<Stock, String> lastUpdatedColumn;
+    TableColumn<Stock, String> lastUpdatedColumn;
 
     @FXML
-    private TableView<Stock> StockTable;
+    TableView<Stock> StockTable;
 
 
     @FXML
@@ -100,11 +100,26 @@ public class addStockController {
             DatabaseConnection.openDBSession();
             DatabaseConnection.databaseSession.beginTransaction();
             Stock stock = new Stock();
-            stock.setType(addTypeField.getText());
-            stock.setProduct_type(addProductTypeField.getText());
-            stock.setMaterial(addMaterialField.getText());
-            stock.setLength(addLengthField.getText());
-            stock.setSupplier(addSupplierField.getText());
+            String type = addTypeField.getText();
+            type = type.substring(0, 1).toUpperCase() + type.substring(1);
+            stock.setType(type);
+
+            String productType = addProductTypeField.getText();
+            productType = productType.substring(0, 1).toUpperCase() + productType.substring(1);
+            stock.setProduct_type(productType);
+
+            String material = addMaterialField.getText();
+            material = material.substring(0, 1).toUpperCase() + material.substring(1);
+            stock.setMaterial(material);
+
+            String length = addLengthField.getText();
+            length = length.substring(0, 1).toUpperCase() + length.substring(1);
+            stock.setLength(length);
+
+            String supplier = addSupplierField.getText();
+            supplier = supplier.substring(0, 1).toUpperCase() + supplier.substring(1);
+            stock.setSupplier(supplier);
+
             stock.setBuying_price(Float.parseFloat(addStockPriceField.getText()));
             stock.setSelling_price(Float.parseFloat(addSellPriceField.getText()));
             stock.setQuantity(0);
@@ -125,6 +140,25 @@ public class addStockController {
             DatabaseConnection.closeDBSession();
             DatabaseConnection.openDBSession();
             DatabaseConnection.closeDBSession();
+
+            SceneController sceneController = new SceneController();
+            try {
+                sceneController.addStock(e);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        addStockPriceField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*(\\.\\d*)?")) {
+                addStockPriceField.setText(newValue.replaceAll("[^\\d.]", ""));
+            }
+        });
+
+        addSellPriceField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*(\\.\\d*)?")) {
+                addSellPriceField.setText(newValue.replaceAll("[^\\d.]", ""));
+            }
         });
 
         openAdminPage.setOnAction(e -> {
@@ -146,6 +180,13 @@ public class addStockController {
             DatabaseConnection.closeDBSession();
             StockTable.getItems().remove(stock);
             resultArea.setText("DELETE FROM Stock WHERE id = " + stock.getId() + ";");
+
+            SceneController sceneController = new SceneController();
+            try {
+                sceneController.addStock(e);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         });
     }
 

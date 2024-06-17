@@ -61,4 +61,8 @@
     -fx-padding: 5px;
 }
 
+.white-text {
+    -fx-fill: white;
+}
+
 

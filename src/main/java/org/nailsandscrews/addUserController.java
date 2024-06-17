@@ -31,22 +31,22 @@ public class addUserController {
 
 
     @FXML
-    private TextField usernameField;
+    TextField usernameField;
 
     @FXML
-    private TextField passwordField;
+    TextField passwordField;
 
     @FXML
-    private TextField typeField;
+    TextField typeField;
 
     @FXML
-    private Button addUser;
+    Button addUser;
 
     @FXML
     private Button userSearch;
 
     @FXML
-    private Button deleteUser;
+    Button deleteUser;
 
     @FXML
     private Button openAdminPage;
@@ -107,15 +107,19 @@ public class addUserController {
         // add user to the sql database and the tableview when the add user button is clicked from the add fields
         addUser.setOnAction(e -> {
             String username = addUsernameField.getText();
+            username = username.substring(0, 1).toUpperCase() + username.substring(1);
+
             String password = addPasswordField.getText();
+            password = password.substring(0, 1).toUpperCase() + password.substring(1);
+
             String type = addTypeField.getText();
+            type = type.substring(0, 1).toUpperCase() + type.substring(1);
 
             User user = new User();
             user.setUsername(username);
             user.setPassword(password);
             user.setType(type);
             user.setCreate_time(LocalDateTime.now().toString());
-
 
             DatabaseConnection.openDBSession();
             DatabaseConnection.databaseSession.beginTransaction();
@@ -130,6 +134,13 @@ public class addUserController {
             addTypeField.clear();
             //display the command to add users to the database in the resultArea
             resultArea.setText("INSERT INTO User (username, password, type, create_time) VALUES ('" + username + "', '" + password + "', '" + type + "', '" + LocalDateTime.now().toString() + "');");
+
+            SceneController sceneController = new SceneController();
+            try {
+                sceneController.addUser(e);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         });
 
 
@@ -158,6 +169,12 @@ public class addUserController {
 
             //display the command to delete users from the database in the resultArea
             resultArea.setText("DELETE FROM User WHERE ID = " + user.getID() + ";");
+            SceneController sceneController = new SceneController();
+            try {
+                sceneController.addUser(e);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         });
 
         // update the selected user from the tableview and the database

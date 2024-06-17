@@ -1,7 +1,5 @@
 package org.nailsandscrews;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.hibernate.*;
 import org.hibernate.cfg.*;
 
@@ -10,15 +8,15 @@ import java.util.List;
 public class DatabaseConnection {
     static Session databaseSession = null;
     static SessionFactory sessionFactory = null;
-    public static void openDBSession()
-    {
+
+    public static void openDBSession() {
         System.out.println("Opening");
         sessionFactory = new Configuration().configure().buildSessionFactory();
         databaseSession = sessionFactory.openSession();
         System.out.println("Opened");
     }
-    public static void closeDBSession()
-    {
+
+    public static void closeDBSession() {
         System.out.println("Closing");
         sessionFactory.close();
         databaseSession.close();
@@ -27,45 +25,51 @@ public class DatabaseConnection {
         System.out.println("Closed");
     }
 
-   public static String authenticateUser(String username, String password) {
-        openDBSession();
-        databaseSession.beginTransaction();
+    public static String authenticateUser(String username, String password) {
+        try (SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory(); Session session = sessionFactory.openSession()) {
 
-        List resultList = databaseSession.createQuery("from User where username = :username and password = :password")
-                .setParameter("username", username)
-                .setParameter("password", password)
-                .getResultList();
+            session.beginTransaction();
 
-        databaseSession.getTransaction().commit();
-        closeDBSession();
+            List<User> resultList = session.createQuery("from User where username = :username and password = :password", User.class).setParameter("username", username).setParameter("password", password).getResultList();
 
-        if (!resultList.isEmpty()) {
-            User user = (User) resultList.get(0);
-            return user.getType(); // assuming getType() method exists in User class
+            session.getTransaction().commit();
+
+            if (!resultList.isEmpty()) {
+                return resultList.get(0).getType();
+            }
         }
 
         return null;
     }
 
     public static List<Stock> getAllStocks() {
-    openDBSession();
-    databaseSession.beginTransaction();
+        try (SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory(); Session session = sessionFactory.openSession()) {
 
-    List<Stock> resultList = databaseSession.createQuery("from Stock").getResultList();
+            session.beginTransaction();
 
-    databaseSession.getTransaction().commit();
-    closeDBSession();
-    return resultList;
+            List<Stock> resultList = session.createQuery("from Stock", Stock.class).getResultList();
+
+            session.getTransaction().commit();
+
+            return resultList;
+        }
     }
 
     public static List<User> getAllUsers() {
-    openDBSession();
-    databaseSession.beginTransaction();
+        try (SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory(); Session session = sessionFactory.openSession()) {
 
-    List<User> resultList = databaseSession.createQuery("from User").getResultList();
+            session.beginTransaction();
 
-    databaseSession.getTransaction().commit();
-    closeDBSession();
-    return resultList;
+            List<User> resultList = session.createQuery("from User", User.class).getResultList();
+
+            session.getTransaction().commit();
+
+            return resultList;
+        }
+    }
+
+    public static void setMock(DatabaseConnection mockDatabaseConnection) {
+        databaseSession = mockDatabaseConnection.databaseSession;
+        sessionFactory = mockDatabaseConnection.sessionFactory;
     }
 }

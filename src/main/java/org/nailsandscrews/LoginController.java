@@ -1,6 +1,7 @@
 package org.nailsandscrews;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -9,8 +10,10 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
+public class LoginController extends Parent {
 
-public class LoginController {
+    public static String savedUsername;
+    public static String savedType;
 
     @FXML
     Button contactAdminButton;
@@ -24,11 +27,18 @@ public class LoginController {
     @FXML
     Button loginButton;
 
-    Alert error = new Alert(Alert.AlertType.ERROR);
     String userType;
+    private SceneController sceneController;
+
+    public String getUsername() {
+        return this.savedUsername;
+    }
+
+    public String getType() {
+        return this.savedType;
+    }
 
     public void initialize() {
-        // prepare the database connection for quicker login
         DatabaseConnection.openDBSession();
         usernameField.setOnAction(e -> passwordField.requestFocus());
         passwordField.setOnAction(e -> loginButton.fire());
@@ -38,24 +48,28 @@ public class LoginController {
             String userType = DatabaseConnection.authenticateUser(username, password);
 
             if (userType != null) {
-                // Perform login action (e.g., show main application window)
                 System.out.println("Login successful! User type: " + userType);
-                Parent root = null;
+                savedUsername = username;
+                savedType = userType;
+                System.out.println("Saved username: " + savedUsername);
+                System.out.println("Saved type: " + savedType);
+
+                SceneController sceneController = new SceneController();
                 try {
-                    if (userType.equals("Admin")) {
-                        SceneController sceneController = new SceneController();
+                    if ("Admin".equals(userType)) {
                         sceneController.AdminScreen(e);
                     } else {
-                        SceneController sceneController = new SceneController();
                         sceneController.StockScreen(e);
                     }
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
             } else {
-                // set wrong username or password alert
-                error.setContentText("Invalid username or password!\nPlease try again or contact an Administrator.");                // show the dialog
-                error.show();
+                javafx.application.Platform.runLater(() -> {
+                    Alert error = new Alert(Alert.AlertType.ERROR);
+                    error.setContentText("Invalid username or password!\nPlease try again or contact an Administrator.");
+                    error.show();
+                });
             }
         });
 

@@ -59,7 +59,7 @@ public class SceneController {
     }
 
     public void LoginScreen(ActionEvent event) throws IOException {
-        switchScene(event, "Login.fxml", null, "Login Screen");
+        switchScene(event, "Login.fxml", "Login Screen", "Login Screen");
     }
 
     public void AdminScreen(ActionEvent event) throws IOException {
@@ -81,4 +81,5 @@ public class SceneController {
     public void addStock(ActionEvent event) throws IOException {
         switchScene(event, "addStock.fxml", "Add Stock", "add Stock");
     }
+
 }

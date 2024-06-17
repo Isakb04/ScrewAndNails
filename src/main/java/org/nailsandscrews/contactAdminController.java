@@ -1,21 +1,15 @@
 package org.nailsandscrews;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.stage.Stage;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
-import javax.swing.*;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 public class contactAdminController {
     @FXML
@@ -33,19 +27,42 @@ public class contactAdminController {
     @FXML
     private TextField message;
 
-    @FXML
-    private Label timer;
-
     public void initialize() {
         messageBox.setEditable(false);
         messageBox.setText("[Messages]" + "\n\n");
 
+        if (Files.exists(Paths.get("messages.txt"))) {
+            try {
+                String messages = new String(Files.readAllBytes(Paths.get("messages.txt")));
+                messageBox.setText(messages);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try {
+                Files.deleteIfExists(Paths.get("messages.txt"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }));
+
+        if (LoginController.savedUsername != null) {
+            userNameField.setText(LoginController.savedType + " " + LoginController.savedUsername);
+            userNameField.setDisable(true);
+            sendMessage.setDisable(false);
+        }
+
+        if (userNameField.getText().isEmpty() || message.getText().isEmpty()) {
+            sendMessage.setDisable(true);
+        }
+
         SceneController sceneController = SceneController.getInstance();
-        String previousFunction = sceneController.thisFunctionName();
-        System.out.println("the previous function is: " + sceneController.previousSceneName());
 
         backButton.setOnAction(e -> {
             try {
+                Files.write(Paths.get("messages.txt"), messageBox.getText().getBytes(), StandardOpenOption.CREATE);
                 String previousSceneName = sceneController.previousSceneName();
                 if (previousSceneName != null) {
                     switch (previousSceneName) {
@@ -59,39 +76,34 @@ public class contactAdminController {
                             sceneController.StockScreen(e);
                             break;
                         default:
-                            System.out.println("Function not found");
+                            System.out.println("Function not found, returning to login screen");
+                            sceneController.LoginScreen(e);
                             break;
                     }
                 } else {
-                    System.out.println("No previous function");
+                    System.out.println("No previous function, returning to login screen");
+                    sceneController.LoginScreen(e);
                 }
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
         });
+
         sendMessage.setOnAction(e -> {
             String userName = userNameField.getText();
             String messageText = message.getText();
             String currentMessages = messageBox.getText();
-            String newMessage = userName + ":" + messageText + "\n";
+            String newMessage = userName + ": " + messageText + "\n";
             messageBox.setText(currentMessages + newMessage);
             message.clear();
         });
 
         userNameField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.length() > 0) {
-                sendMessage.setDisable(false);
-            } else {
-                sendMessage.setDisable(true);
-            }
+            sendMessage.setDisable(newValue.trim().isEmpty());
         });
 
         message.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.isEmpty()) {
-                sendMessage.setDisable(false);
-            } else {
-                sendMessage.setDisable(true);
-            }
+            sendMessage.setDisable(newValue.trim().isEmpty());
         });
     }
 }

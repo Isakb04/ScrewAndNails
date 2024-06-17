@@ -4,10 +4,7 @@
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
@@ -26,10 +23,6 @@
         <children>
             <HBox prefHeight="100.0" prefWidth="200.0" />
             <Rectangle arcHeight="25" arcWidth="25" fill="#3c4036" height="97" scaleX="1.5" width="863.0" />
-            <Text fx:id="userIdInfoPage" strokeType="OUTSIDE" strokeWidth="0.0" text="UserID:" translateX="-161.0" />
-            <Text fx:id="userNameInfoPage" strokeType="OUTSIDE" strokeWidth="0.0" text="UserName:" translateX="-200.0" translateY="15.0" />
-            <Text fx:id="typeInfoPage" strokeType="OUTSIDE" strokeWidth="0.0" text="Type:" translateX="-258.0" translateY="30.0" />
-            <Text fx:id="systemInfoPage" strokeType="OUTSIDE" strokeWidth="0.0" text="System Info:" translateX="-286.0" translateY="45.0" />
         </children>
     </HBox>
     <AnchorPane prefHeight="200.0" prefWidth="200.0" />
@@ -37,20 +30,18 @@
         <children>
             <AnchorPane prefHeight="20.0" prefWidth="2012.0" translateX="-23.0">
                 <children>
-                    <ComboBox layoutX="98.0" layoutY="-13.0" prefWidth="150.0" promptText="Choice 2" />
-                    <ComboBox layoutX="271.0" layoutY="-13.0" prefWidth="150.0" promptText="Choice 4" />
-                    <MenuButton layoutX="1097.0" layoutY="-20.0" mnemonicParsing="false" text="Account">
-                        <items>
-                            <MenuItem fx:id="contactAdmin1" mnemonicParsing="false" text="ContactAdmin" />
-                            <MenuItem fx:id="logoutButton" mnemonicParsing="false" text="Logout" />
-                        </items>
-                    </MenuButton>
                     <ImageView fitHeight="74.0" fitWidth="83.0" layoutX="5.0" layoutY="-53.0" pickOnBounds="true" preserveRatio="true" />
                     <ImageView fitHeight="74.0" fitWidth="74.0" layoutX="2.0" layoutY="-73.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                             <Image url="@../resources/images/Designer.png" />
                         </image>
                     </ImageView>
+                    <Button fx:id="contactAdmin" layoutX="1040.0" layoutY="-22.0" mnemonicParsing="false" text="Contact Admin" />
+                    <Button fx:id="logoutButton" layoutX="1181.0" layoutY="-22.0" mnemonicParsing="false" text="Logout" />
+                    <Text fx:id="userNameInfoPage" layoutX="610.0" layoutY="9.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="white-text" text="UserName:" />
+                    <Text fx:id="typeInfoPage" layoutX="727.0" layoutY="9.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="white-text" text="Type:" />
+                    <Text fx:id="systemInfoPage" layoutX="825.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="white-text" text="System Info:" />
+               <Button fx:id="adminHub" layoutX="95.0" layoutY="-22.0" mnemonicParsing="false" text="Admin Hub" />
                 </children>
             </AnchorPane>
         </children>
@@ -74,7 +65,7 @@
                             <TreeView fx:id="treeView" layoutX="644.0" layoutY="68.0" onContextMenuRequested="#selectItem" onMouseClicked="#selectItem" prefHeight="493.0" prefWidth="284.0" />
                             <TextField fx:id="searchField" layoutX="646.0" layoutY="24.0" prefHeight="30.0" prefWidth="279.0" />
                             <Button fx:id="sellOrBuyStockButton" layoutX="339.0" layoutY="490.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="220.0" text="Sell or buy Stock" />
-                            <AnchorPane fx:id="rightScreen" layoutX="571.0" layoutY="8.0" prefHeight="546.0" prefWidth="507.0" translateX="400.0">
+                            <AnchorPane fx:id="rightScreen" layoutX="571.0" layoutY="8.0" prefHeight="546.0" prefWidth="517.0" translateX="400.0">
                                 <children>
                                     <Separator layoutX="251.0" layoutY="39.0" orientation="VERTICAL" prefHeight="225.0" prefWidth="3.0" />
                                     <Separator layoutY="-1.0" prefHeight="1.0" prefWidth="517.0" />
@@ -107,7 +98,6 @@
                                 <Image url="@../resources/images/unknown-image.jpg" />
                             </ImageView>
                             <Button fx:id="printAll" layoutX="676.0" layoutY="520.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="220.0" text="Print All Stock" />
-                     <Button fx:id="contactAdmin" layoutX="928.0" layoutY="12.0" mnemonicParsing="false" text="Button" />
                         </children>
                     </AnchorPane>
                 </VBox>
