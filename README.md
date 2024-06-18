@@ -34,15 +34,12 @@ Efficient stock management is crucial for companies dealing with large quantitie
 ### Files Included
 
 - Main.java
-- addStock.java
 - addStock.fxml
 - addStockController.java
-- addUser.java
 - addUser.fxml
 - addUserController.java
 - adminScreen.fxml
 - adminScreenController.java
-- contactAdmin.java
 - contactAdmin.fxml
 - contactAdminController.java
 - DatabaseConnection.java
@@ -51,6 +48,7 @@ Efficient stock management is crucial for companies dealing with large quantitie
 - SceneController.java
 - Stock.java
 - StockController.java
+- BaseController.java
 - StockScreen.fxml
 - User.java
 - hibernate.cfg.xml
