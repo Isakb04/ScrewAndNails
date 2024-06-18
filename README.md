@@ -1,4 +1,4 @@
-# Screws&NailsRUs Stock Management System [Project Documentation]
+# Stock Management System [Project Documentation]
 
 ## Overview
 The system manages screws, nails, and wall plugs in various materials, lengths, and types. It displays current stock levels, handles sales, restocking, and generates detailed reports. Features include a secure login with different user roles (Employee and Admin) and a product search function.
