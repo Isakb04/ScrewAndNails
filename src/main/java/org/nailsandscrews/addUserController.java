@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class addUserController {
+public class addUserController extends BaseController {
 
     public TextField addTypeField;
     public TextField addUsernameField;
@@ -144,12 +144,9 @@ public class addUserController {
         });
 
 
-        // search button to highlight the user in the tableview that matches the username and type fields
-
-
+        // open the admin page
         openAdminPage.setOnAction(e -> {
             try {
-                SceneController sceneController = new SceneController();
                 sceneController.AdminScreen(e);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
@@ -176,8 +173,6 @@ public class addUserController {
                 throw new RuntimeException(ex);
             }
         });
-
-        // update the selected user from the tableview and the database
     }
 
 

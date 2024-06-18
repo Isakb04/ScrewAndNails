@@ -3,7 +3,7 @@ package org.nailsandscrews;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-public class adminScreenController {
+public class adminScreenController extends BaseController{
 
     @FXML
     private Button addUserButton;
@@ -21,8 +21,8 @@ public class adminScreenController {
     private Button addStockButton;
 
     public void initialize() {
-        SceneController sceneController = new SceneController();
 
+        // Add event for buttons to open different screens
         addUserButton.setOnAction(e -> {
             try {
                 sceneController.addUser(e);

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class addStockController {
+public class addStockController extends BaseController {
 
 
     public TextField typeField;
@@ -96,6 +96,7 @@ public class addStockController {
         dateAddedColumn.setCellValueFactory(new PropertyValueFactory<Stock, String>("date_added"));
         lastUpdatedColumn.setCellValueFactory(new PropertyValueFactory<Stock, String>("last_updated"));
 
+        // add stock to the database
         addStock.setOnAction(e -> {
             DatabaseConnection.openDBSession();
             DatabaseConnection.databaseSession.beginTransaction();
@@ -149,21 +150,23 @@ public class addStockController {
             }
         });
 
+        // add a listener to the stock price field to ensure only numbers and .'s are entered
         addStockPriceField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*(\\.\\d*)?")) {
                 addStockPriceField.setText(newValue.replaceAll("[^\\d.]", ""));
             }
         });
 
+        // add a listener to the sell price field to ensure only numbers and .'s are entered
         addSellPriceField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*(\\.\\d*)?")) {
                 addSellPriceField.setText(newValue.replaceAll("[^\\d.]", ""));
             }
         });
 
+        // open the admin page
         openAdminPage.setOnAction(e -> {
             try {
-                SceneController sceneController = new SceneController();
                 sceneController.AdminScreen(e);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);

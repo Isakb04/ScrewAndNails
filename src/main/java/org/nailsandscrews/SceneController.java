@@ -12,8 +12,8 @@ import javafx.stage.Stage;
 
 public class SceneController {
     private static SceneController instance;
-    private String previousSceneName; // Field to keep track of the previous scene name
-    private String previousFunctionName; // New field to keep track of the previous function name
+    private String previousSceneName; // keep track of the previous scene name
+    private String previousFunctionName; // keep track of the previous function name
 
     public SceneController() {
         instance = this;
@@ -26,7 +26,7 @@ public class SceneController {
         return instance;
     }
 
-    private void switchScene(ActionEvent event, String fxmlFile, String title, String functionName) throws IOException {
+    void switchScene(ActionEvent event, String fxmlFile, String title, String functionName) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         // Set previousScene, previousSceneName, and previousFunctionName to the current scene, its name, and function name before switching

@@ -530,6 +530,7 @@ public class StockController<stock> implements Initializable {
         System.out.println("Search stock");
     }
 
+    // show data about selected stock
     private void showData() {
         // Create a series for the change in price
         AreaChart.Series<String, Number> changeInPriceSeries = new AreaChart.Series<>();
@@ -550,11 +551,13 @@ public class StockController<stock> implements Initializable {
         changeInPrice.setCreateSymbols(false);
     }
 
+    // refresh the show data
     public void refreshShowData() {
         changeInPrice.getData().clear();
         showData();
     }
 
+    //show the user info
     public void showUserInfo() {
         userNameInfoPage.setText("[UserName]: " + LoginController.savedUsername);
         typeInfoPage.setText("[Type]: " + LoginController.savedType);

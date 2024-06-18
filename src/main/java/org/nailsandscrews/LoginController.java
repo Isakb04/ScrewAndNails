@@ -10,7 +10,7 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
-public class LoginController extends Parent {
+public class LoginController {
 
     public static String savedUsername;
     public static String savedType;
@@ -31,11 +31,11 @@ public class LoginController extends Parent {
     private SceneController sceneController;
 
     public String getUsername() {
-        return this.savedUsername;
+        return savedUsername;
     }
 
     public String getType() {
-        return this.savedType;
+        return savedType;
     }
 
     public void initialize() {
@@ -47,6 +47,7 @@ public class LoginController extends Parent {
             String password = passwordField.getText();
             String userType = DatabaseConnection.authenticateUser(username, password);
 
+            // If user is authenticated, open the appropriate screen
             if (userType != null) {
                 System.out.println("Login successful! User type: " + userType);
                 savedUsername = username;
@@ -73,6 +74,7 @@ public class LoginController extends Parent {
             }
         });
 
+        // open contact admin screen
         contactAdminButton.setOnAction(e -> {
             try {
                 SceneController sceneController = new SceneController();
