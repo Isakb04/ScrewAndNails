@@ -6,7 +6,7 @@
         <property name="connection.url">jdbc:mysql://localhost:3306/stocksystem</property>
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="connection.username">root</property>
-        <property name="connection.password">Isak2502</property>
+        <property name="connection.password">**Password**</property>
         <property name="connection.pool_size">10</property>
         <property name="show_sql">true</property>
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
